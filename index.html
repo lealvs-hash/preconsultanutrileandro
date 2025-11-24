@@ -19,6 +19,16 @@
             .bg-slate-50 { background-color: white !important; }
             .print-break-inside { break-inside: avoid; }
             input[readonly] { background-color: white !important; color: black !important; }
+            
+            /* Ajustes para rádios e checkboxes na impressão */
+            input[type="radio"] { -webkit-appearance: radio !important; }
+        }
+
+        /* Estilo customizado para os inputs de rádio visuais */
+        .radio-color:checked + div {
+            ring-width: 4px;
+            --tw-ring-color: #059669; 
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -39,12 +49,10 @@
         </div>
     </div>
 
-    <!-- 
-        ATENÇÃO: Removido enctype="multipart/form-data" para compatibilidade com plano Free 
-    -->
+    <!-- FORMULÁRIO -->
     <form action="https://formspree.io/f/mjkdbala" method="POST" class="max-w-5xl mx-auto px-6 pb-20 space-y-8">
         
-        <!-- BLOCO 1: DADOS PESSOAIS -->
+        <!-- BLOCO 1: DADOS PESSOAIS E ANTROPOMETRIA -->
         <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside">
             <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
                 <div class="bg-slate-800 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</div>
@@ -81,13 +89,13 @@
                 </div>
                 <div class="md:col-span-4 border-t border-slate-100 my-2"></div>
                 
-                <!-- Peso -->
+                <!-- Peso Atual -->
                 <div>
-                    <label class="block text-sm font-semibold text-slate-600 mb-1">Peso (kg)</label>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Peso Atual (kg)</label>
                     <input type="number" name="peso" id="peso" oninput="calcularIMC()" step="0.1" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 75.5">
                 </div>
 
-                <!-- Altura com Formatação Automática -->
+                <!-- Altura -->
                 <div>
                     <label class="block text-sm font-semibold text-slate-600 mb-1">Altura (m)</label>
                     <input type="tel" name="altura" id="altura" oninput="formatarAltura(this); calcularIMC()" maxlength="4" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 1,75">
@@ -101,6 +109,54 @@
                         <input type="text" name="imc_classificacao" id="imcClassificacao" readonly class="w-2/3 bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-slate-500 text-sm" placeholder="Classificação">
                     </div>
                 </div>
+
+                <!-- Histórico de Peso (NOVO LAYOUT) -->
+                <div class="md:col-span-4 pt-4 mt-2 border-t border-slate-100">
+                    <h3 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wide">Histórico de Peso</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        
+                        <!-- Peso Habitual (Pequeno) -->
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600 mb-1">Peso Habitual (kg)</label>
+                            <input type="number" step="0.1" name="peso_habitual" class="w-32 bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 70">
+                        </div>
+
+                        <!-- Alteração de Peso (Interativo) -->
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600 mb-2">Houve alteração recente?</label>
+                            
+                            <!-- Opções -->
+                            <div class="flex flex-wrap gap-4 mb-3">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="tipo_alteracao_peso" value="Sem alteração" class="text-emerald-500 focus:ring-emerald-500" onclick="togglePesoDetails(false)" checked>
+                                    <span class="text-sm">Sem alteração</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="tipo_alteracao_peso" value="Ganhou (+)" class="text-emerald-500 focus:ring-emerald-500" onclick="togglePesoDetails(true)">
+                                    <span class="text-sm">Ganhei (+)</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="tipo_alteracao_peso" value="Perdeu (-)" class="text-emerald-500 focus:ring-emerald-500" onclick="togglePesoDetails(true)">
+                                    <span class="text-sm">Perdi (-)</span>
+                                </label>
+                            </div>
+
+                            <!-- Campos Escondidos -->
+                            <div id="peso_details" class="hidden flex gap-3 items-end">
+                                <div>
+                                    <label class="text-xs text-slate-500 font-bold">Quanto? (kg)</label>
+                                    <input type="number" step="0.1" name="peso_qtd_alteracao" class="w-24 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 outline-none text-sm focus:ring-1 focus:ring-emerald-500" placeholder="Ex: 3">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="text-xs text-slate-500 font-bold">Em quanto tempo?</label>
+                                    <input type="text" name="peso_tempo_alteracao" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 outline-none text-sm focus:ring-1 focus:ring-emerald-500" placeholder="Ex: 2 meses, 15 dias">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -113,12 +169,16 @@
             <div class="p-6 space-y-6">
                 <div>
                     <label class="block text-sm font-semibold text-slate-600 mb-1">Qual seu objetivo principal hoje?</label>
-                    <select name="objetivo_principal" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none text-slate-600">
+                    <select id="objetivo_select" name="objetivo_principal" onchange="verificarOutroObjetivo(this)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none text-slate-600">
                         <option>Hipertrofia (Ganho de Massa)</option>
                         <option>Emagrecimento / Definição</option>
                         <option>Performance Esportiva</option>
                         <option>Reeducação Alimentar / Saúde</option>
+                        <option value="Outro">Outro (Especifique abaixo)</option>
                     </select>
+                    
+                    <!-- Campo 'Outro' escondido inicialmente -->
+                    <input type="text" id="objetivo_outro" name="objetivo_outro_especifico" class="w-full mt-3 bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none hidden" placeholder="Digite seu objetivo aqui...">
                 </div>
             </div>
         </section>
@@ -129,29 +189,58 @@
                 <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</div>
                 <h2 class="font-bold text-slate-700">Rotina de Treino <span class="text-xs font-normal text-slate-500 ml-1">(Nutrição Esportiva)</span></h2>
             </div>
-            <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-sm font-semibold text-slate-600 mb-1">Modalidade Principal</label>
-                    <input type="text" name="modalidade" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
+            <div class="p-6 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-1">Modalidade Principal</label>
+                        <input type="text" name="modalidade" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                    <div>
+                         <label class="block text-sm font-semibold text-slate-600 mb-1">Horário Habitual</label>
+                        <input type="time" name="horario_treino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-600 mb-1">Frequência Semanal</label>
-                    <select name="frequencia_treino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none text-slate-600">
-                        <option>Sedentário</option>
-                        <option>1 a 2x na semana</option>
-                        <option>3 a 4x na semana</option>
-                        <option>5 a 6x na semana</option>
-                        <option>Todos os dias</option>
-                    </select>
+
+                <!-- Distribuição Semanal de Treinos -->
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                     <label class="block text-sm font-semibold text-slate-600 mb-3">Distribuição Semanal do Treino</label>
+                     <p class="text-xs text-slate-500 mb-3">Marque os dias de treino e especifique a modalidade ou grupo muscular (Ex: Musculação/Pernas, Corrida, Descanso).</p>
+                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Segunda</span>
+                            <input type="text" name="treino_segunda" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Pernas">
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Terça</span>
+                            <input type="text" name="treino_terca" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Peito">
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Quarta</span>
+                            <input type="text" name="treino_quarta" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Descanso">
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Quinta</span>
+                            <input type="text" name="treino_quinta" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Costas">
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Sexta</span>
+                            <input type="text" name="treino_sexta" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Ombros">
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Sábado</span>
+                            <input type="text" name="treino_sabado" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Cardio">
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Domingo</span>
+                            <input type="text" name="treino_domingo" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Descanso">
+                        </div>
+                     </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-semibold text-slate-600 mb-1">Horário do Treino</label>
-                    <input type="time" name="horario_treino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
-                </div>
+
                 <!-- Campo Intensidade e Duração -->
                 <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">Intensidade</label>
+                        <label class="block text-sm font-semibold text-slate-600 mb-1">Intensidade Média</label>
                         <div class="flex flex-col gap-1 mt-2">
                             <label class="flex items-center gap-2 text-sm"><input type="radio" name="intensidade" value="Leve" class="text-emerald-500"> Leve</label>
                             <label class="flex items-center gap-2 text-sm"><input type="radio" name="intensidade" value="Moderada" class="text-emerald-500"> Moderada</label>
@@ -159,7 +248,7 @@
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">Duração (Tempo)</label>
+                        <label class="block text-sm font-semibold text-slate-600 mb-1">Duração Média</label>
                         <input type="text" name="duracao_treino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 1h 30min">
                     </div>
                 </div>
@@ -226,43 +315,59 @@
                     </div>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-100">
-                    <!-- Intestino -->
+                <!-- SESSÃO FISIOLÓGICA: INTESTINO E URINA -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+                    <!-- Frequência Intestinal (SIMPLIFICADO) -->
                     <div>
-                         <label class="block text-sm font-semibold text-slate-600 mb-2">Intestino (Escala de Bristol)</label>
-                         <select name="intestino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 outline-none text-slate-600 text-sm">
-                            <option value="" disabled selected>Selecione o formato...</option>
-                            <option>Tipo 1: Caroços duros e separados</option>
-                            <option>Tipo 2: Salsicha encaroçada</option>
-                            <option>Tipo 3: Salsicha com rachaduras</option>
-                            <option>Tipo 4: Salsicha lisa e mole (Normal)</option>
-                            <option>Tipo 5: Pedaços moles c/ bordas nítidas</option>
-                            <option>Tipo 6: Pedaços aerados/pastosos</option>
-                            <option>Tipo 7: Totalmente líquido</option>
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">Frequência Intestinal</label>
+                        <select name="frequencia_intestino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 outline-none text-slate-600 text-sm">
+                            <option value="" disabled selected>Quantas vezes vai ao banheiro?</option>
+                            <option>1 vez ao dia</option>
+                            <option>2 a 3 vezes ao dia</option>
+                            <option>Dia sim, dia não</option>
+                            <option>A cada 2-3 dias</option>
+                            <option>Mais de 3 vezes ao dia</option>
                         </select>
                     </div>
-                    <!-- Urina -->
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-2">Coloração da Urina</label>
-                        <select name="urina" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 outline-none text-slate-600 text-sm">
-                            <option value="" disabled selected>Selecione a cor...</option>
-                            <option>1. Transparente</option>
-                            <option>2. Amarelo Palha/Claro (Ideal)</option>
-                            <option>3. Amarelo Ouro</option>
-                            <option>4. Amarelo Escuro/Âmbar</option>
-                            <option>5. Laranja/Acastanhado</option>
-                        </select>
-                    </div>
-                    <!-- Hidratação -->
+
+                    <!-- Hidratação (Atualizado) -->
                     <div>
                         <label class="block text-sm font-semibold text-slate-600 mb-2">Consumo de Água Diário</label>
                         <select name="hidratacao" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 outline-none text-slate-600 text-sm">
                             <option value="" disabled selected>Selecione a quantidade...</option>
-                            <option>Menos de 1 Litro (Muito pouco)</option>
+                            <option>Menos de 1 Litro</option>
                             <option>1 a 2 Litros</option>
-                            <option>2 a 3 Litros (Ideal)</option>
-                            <option>3 a 4 Litros (Alto)</option>
+                            <option>2 a 3 Litros</option>
+                            <option>3 a 4 Litros</option>
                             <option>Mais de 4 Litros</option>
+                        </select>
+                    </div>
+
+                    <!-- Intestino (Bristol Limpo - Sem Emojis) -->
+                    <div>
+                         <label class="block text-sm font-semibold text-slate-600 mb-2">Formato das Fezes (Escala de Bristol)</label>
+                         <select name="intestino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 outline-none text-slate-600 text-sm">
+                            <option value="" disabled selected>Selecione o formato que mais se parece...</option>
+                            <option>Tipo 1: Caroços duros e separados (Difícil de sair)</option>
+                            <option>Tipo 2: Forma de salsicha, mas encaroçada</option>
+                            <option>Tipo 3: Salsicha com rachaduras</option>
+                            <option>Tipo 4: Salsicha lisa e mole (Ideal)</option>
+                            <option>Tipo 5: Pedaços moles com bordas nítidas</option>
+                            <option>Tipo 6: Pedaços aerados/pastosos (Diarréia leve)</option>
+                            <option>Tipo 7: Totalmente líquido (Diarréia)</option>
+                        </select>
+                    </div>
+
+                    <!-- Urina (Cores com Emojis/Círculos) -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">Coloração da Urina</label>
+                        <select name="urina" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 outline-none text-slate-600 text-sm">
+                            <option value="" disabled selected>Selecione a cor...</option>
+                            <option>⚪ Transparente</option>
+                            <option>🟡 Amarelo Palha/Claro (Ideal)</option>
+                            <option>🌕 Amarelo Ouro</option>
+                            <option>🟠 Amarelo Escuro/Âmbar</option>
+                            <option>🔴 Laranja/Acastanhado</option>
                         </select>
                     </div>
                 </div>
@@ -388,6 +493,13 @@
                     <p class="text-xs text-emerald-700 mb-2">Descreva resumidamente como sua alimentação muda no sábado e domingo.</p>
                     <textarea name="finais_semana" class="w-full p-3 border border-emerald-300 rounded-lg text-sm outline-none focus:ring-1 focus:ring-emerald-500 h-24 resize-none bg-white"></textarea>
                 </div>
+                
+                <!-- Campo Livre Final -->
+                <div class="bg-slate-50 p-6 border-t border-slate-200 mt-6">
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">Observações Adicionais</label>
+                    <p class="text-xs text-slate-500 mb-2">Existe algo mais que você acha importante me contar? (Hábitos, horários específicos, sentimentos em relação à comida, etc.)</p>
+                    <textarea name="observacoes_finais" class="w-full bg-white border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-500 outline-none h-32 resize-none"></textarea>
+                </div>
 
             </div>
         </section>
@@ -479,6 +591,30 @@
             } else {
                 document.getElementById('imcOutput').value = '';
                 document.getElementById('imcClassificacao').value = '';
+            }
+        }
+
+        function verificarOutroObjetivo(selectElement) {
+            var inputOutro = document.getElementById('objetivo_outro');
+            if (selectElement.value === 'Outro') {
+                inputOutro.classList.remove('hidden');
+                inputOutro.required = true;
+            } else {
+                inputOutro.classList.add('hidden');
+                inputOutro.required = false;
+                inputOutro.value = ''; // Limpa o campo se esconder
+            }
+        }
+
+        function togglePesoDetails(show) {
+            const details = document.getElementById('peso_details');
+            if (show) {
+                details.classList.remove('hidden');
+            } else {
+                details.classList.add('hidden');
+                // Limpa os campos ao esconder
+                const inputs = details.querySelectorAll('input');
+                inputs.forEach(input => input.value = '');
             }
         }
     </script>
