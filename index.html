@@ -40,10 +40,9 @@
     </div>
 
     <!-- 
-        ATENÇÃO: SUBSTITUA O LINK ABAIXO PELO SEU LINK DO FORMSPREE 
-        Exemplo: action="https://formspree.io/f/xmqzloqw"
+        ATENÇÃO: O enctype="multipart/form-data" é OBRIGATÓRIO para envio de arquivos 
     -->
-    <form action="https://formspree.io/f/SEU_CODIGO_AQUI" method="POST" class="max-w-5xl mx-auto px-6 pb-20 space-y-8">
+    <form action="https://formspree.io/f/mjkdbala" method="POST" enctype="multipart/form-data" class="max-w-5xl mx-auto px-6 pb-20 space-y-8">
         
         <!-- BLOCO 1: DADOS PESSOAIS -->
         <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside">
@@ -161,15 +160,26 @@
             </div>
         </section>
 
-        <!-- BLOCO EXAMES DE SANGUE -->
+        <!-- BLOCO EXAMES DE SANGUE (COM UPLOAD) -->
         <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside">
              <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
                 <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-microscope"></i></div>
                 <h2 class="font-bold text-slate-700">Exames Laboratoriais</h2>
             </div>
             <div class="p-6">
-                <label class="block text-sm font-semibold text-slate-600 mb-1">Exames Recentes (Últimos 6 meses)</label>
-                <p class="text-xs text-slate-500 mb-2">Liste os resultados principais abaixo se souber. <br><span class="text-emerald-600 font-bold">Importante:</span> Envie fotos ou PDF dos exames completos para o Nutricionista via WhatsApp ou E-mail.</p>
+                <label class="block text-sm font-semibold text-slate-600 mb-2">Anexar Exames (Opcional)</label>
+                <!-- Botão de Upload -->
+                <input type="file" name="arquivo_exames" accept=".pdf, .jpg, .jpeg, .png" class="block w-full text-sm text-slate-500
+                  file:mr-4 file:py-2 file:px-4
+                  file:rounded-full file:border-0
+                  file:text-sm file:font-semibold
+                  file:bg-emerald-50 file:text-emerald-700
+                  hover:file:bg-emerald-100
+                  mb-4
+                "/>
+                
+                <label class="block text-sm font-semibold text-slate-600 mb-1">Observações sobre Exames</label>
+                <p class="text-xs text-slate-500 mb-2">Se preferir, digite os resultados principais abaixo (Colesterol, Glicose, Ferro...).</p>
                 <textarea name="exames_recentes" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none h-24 resize-none"></textarea>
             </div>
         </section>
@@ -239,7 +249,7 @@
                             <option>5. Laranja/Acastanhado</option>
                         </select>
                     </div>
-                    <!-- Hidratação (NOVO) -->
+                    <!-- Hidratação -->
                     <div>
                         <label class="block text-sm font-semibold text-slate-600 mb-2">Consumo de Água Diário</label>
                         <select name="hidratacao" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 outline-none text-slate-600 text-sm">
