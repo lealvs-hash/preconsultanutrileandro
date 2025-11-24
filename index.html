@@ -40,9 +40,9 @@
     </div>
 
     <!-- 
-        ATENÇÃO: O enctype="multipart/form-data" é OBRIGATÓRIO para envio de arquivos 
+        ATENÇÃO: Removido enctype="multipart/form-data" para compatibilidade com plano Free 
     -->
-    <form action="https://formspree.io/f/mjkdbala" method="POST" enctype="multipart/form-data" class="max-w-5xl mx-auto px-6 pb-20 space-y-8">
+    <form action="https://formspree.io/f/mjkdbala" method="POST" class="max-w-5xl mx-auto px-6 pb-20 space-y-8">
         
         <!-- BLOCO 1: DADOS PESSOAIS -->
         <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside">
@@ -80,14 +80,20 @@
                     <input type="tel" name="whatsapp" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
                 </div>
                 <div class="md:col-span-4 border-t border-slate-100 my-2"></div>
+                
+                <!-- Peso -->
                 <div>
                     <label class="block text-sm font-semibold text-slate-600 mb-1">Peso (kg)</label>
-                    <input type="number" name="peso" id="peso" oninput="calcularIMC()" step="0.1" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    <input type="number" name="peso" id="peso" oninput="calcularIMC()" step="0.1" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 75.5">
                 </div>
+
+                <!-- Altura com Formatação Automática -->
                 <div>
                     <label class="block text-sm font-semibold text-slate-600 mb-1">Altura (m)</label>
-                    <input type="number" name="altura" id="altura" oninput="calcularIMC()" step="0.01" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    <input type="tel" name="altura" id="altura" oninput="formatarAltura(this); calcularIMC()" maxlength="4" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 1,75">
                 </div>
+
+                <!-- IMC -->
                 <div class="md:col-span-2">
                     <label class="block text-sm font-semibold text-slate-600 mb-1">IMC Calculado</label>
                     <div class="flex gap-2">
@@ -160,24 +166,22 @@
             </div>
         </section>
 
-        <!-- BLOCO EXAMES DE SANGUE (COM UPLOAD) -->
+        <!-- BLOCO EXAMES DE SANGUE (SEM UPLOAD - INSTRUÇÃO DE ENVIO) -->
         <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside">
              <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
                 <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-microscope"></i></div>
                 <h2 class="font-bold text-slate-700">Exames Laboratoriais</h2>
             </div>
             <div class="p-6">
-                <label class="block text-sm font-semibold text-slate-600 mb-2">Anexar Exames (Opcional)</label>
-                <!-- Botão de Upload -->
-                <input type="file" name="arquivo_exames" accept=".pdf, .jpg, .jpeg, .png" class="block w-full text-sm text-slate-500
-                  file:mr-4 file:py-2 file:px-4
-                  file:rounded-full file:border-0
-                  file:text-sm file:font-semibold
-                  file:bg-emerald-50 file:text-emerald-700
-                  hover:file:bg-emerald-100
-                  mb-4
-                "/>
                 
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200 mb-4 flex items-start gap-3">
+                    <i class="fa-brands fa-whatsapp text-emerald-600 text-xl mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-emerald-800 text-sm">Envio de Arquivos</h4>
+                        <p class="text-sm text-emerald-700">Por favor, envie as fotos ou PDF dos seus exames diretamente pelo <strong>WhatsApp</strong> ou para o e-mail <strong>nutrilealves@gmail.com</strong>.</p>
+                    </div>
+                </div>
+
                 <label class="block text-sm font-semibold text-slate-600 mb-1">Observações sobre Exames</label>
                 <p class="text-xs text-slate-500 mb-2">Se preferir, digite os resultados principais abaixo (Colesterol, Glicose, Ferro...).</p>
                 <textarea name="exames_recentes" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none h-24 resize-none"></textarea>
@@ -397,7 +401,7 @@
             
             <!-- Botão Salvar PDF -->
             <button type="button" onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-10 rounded-full shadow-xl transform transition hover:-translate-y-1 flex items-center gap-2 cursor-pointer w-full md:w-auto justify-center">
-                <i class="fa-solid fa-print"></i> Apenas Salvar PDF
+                <i class="fa-solid fa-print"></i> Salvar PDF e instruir (enviar arquivo.pdf por whatsapp ou email)
             </button>
         </div>
 
@@ -422,10 +426,22 @@
             }
         }
 
+        function formatarAltura(element) {
+            let valor = element.value.replace(/\D/g, "");
+            if (valor.length > 1) {
+                valor = valor.replace(/^(\d{1})(\d)/, "$1,$2");
+            }
+            element.value = valor;
+        }
+
         function calcularIMC() {
-            const peso = parseFloat(document.getElementById('peso').value);
-            const altura = parseFloat(document.getElementById('altura').value);
+            const pesoRaw = document.getElementById('peso').value;
+            const alturaRaw = document.getElementById('altura').value;
             const dataNascInput = document.getElementById('dataNascimento').value;
+
+            // Tratamento de vírgula e ponto
+            const peso = parseFloat(pesoRaw.replace(',', '.'));
+            const altura = parseFloat(alturaRaw.replace(',', '.'));
 
             if (peso > 0 && altura > 0) {
                 const imc = peso / (altura * altura);
