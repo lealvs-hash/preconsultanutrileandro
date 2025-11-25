@@ -4,662 +4,642 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anamnese | Leandro Alves Nutricionista</title>
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Fontes -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Ícones -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
-
-    <!-- BIBLIOTECA PARA GERAR PDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" referrerpolicy="no-referrer"></script>
-
     <style>
         body { font-family: 'Inter', sans-serif; }
         
-        /* --- ESTILOS DO PDF GERADO (Invisível na tela) --- */
-        #pdf-template {
-            display: none;
-            background: white;
-            font-family: 'Arial', sans-serif;
-            font-size: 11px;
-            color: #000;
-            line-height: 1.3;
-            width: 100%;
-            padding: 30px;
-            /* Posicionamento absoluto para não quebrar o layout ao aparecer brevemente */
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: -9999;
+        /* Estilos específicos para Impressão */
+        @media print {
+            .no-print { display: none !important; }
+            body { background-color: white; -webkit-print-color-adjust: exact; }
+            .shadow-lg, .shadow-sm { box-shadow: none !important; }
+            input, textarea, select { border: 1px solid #ccc !important; background: white !important; appearance: none; }
+            .bg-slate-50 { background-color: white !important; }
+            .print-break-inside { break-inside: avoid; }
+            input[readonly] { background-color: white !important; color: black !important; }
+            
+            /* Ajustes para rádios e checkboxes na impressão */
+            input[type="radio"] { -webkit-appearance: radio !important; }
         }
-        #pdf-template .header { text-align: center; margin-bottom: 20px; border-bottom: 2px solid #047857; padding-bottom: 10px; }
-        #pdf-template h1 { color: #047857; font-size: 18px; margin: 0; font-weight: bold; text-transform: uppercase; }
-        #pdf-template p.sub { font-size: 10px; color: #555; margin-top: 5px; }
-        
-        #pdf-template .section-title { 
-            background-color: #f0fdf4; 
-            color: #064e3b; 
-            font-size: 12px; 
-            font-weight: bold; 
-            padding: 5px; 
-            margin-top: 15px; 
-            margin-bottom: 10px; 
-            border-left: 4px solid #059669; 
-            text-transform: uppercase;
-        }
-        
-        #pdf-template .row { display: flex; border-bottom: 1px dotted #ddd; padding: 3px 0; page-break-inside: avoid; }
-        #pdf-template .label { font-weight: bold; width: 35%; color: #333; }
-        #pdf-template .value { width: 65%; color: #000; text-align: left; }
-        
-        #pdf-template .block { margin-bottom: 8px; border-bottom: 1px solid #eee; padding-bottom: 5px; page-break-inside: avoid; }
-        #pdf-template .block-label { font-weight: bold; display: block; color: #047857; margin-bottom: 2px; }
-        #pdf-template .block-value { display: block; white-space: pre-wrap; margin-left: 10px; }
 
-        /* Estilos de Tela */
-        .radio-color:checked + div { ring-width: 4px; --tw-ring-color: #059669; transform: scale(1.1); }
-        @media print { .no-print { display: none !important; } }
+        /* Estilo customizado para os inputs de rádio visuais */
+        .radio-color:checked + div {
+            ring-width: 4px;
+            --tw-ring-color: #059669; 
+            transform: scale(1.1);
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 relative">
+<body class="bg-slate-50 text-slate-800">
 
-    <div id="conteudo-principal">
-        <!-- Header -->
-        <div class="bg-slate-900 text-white py-10 px-6 mb-8 border-b-4 border-emerald-500">
-            <div class="max-w-5xl mx-auto flex flex-col items-center text-center gap-6">
-                <h1 class="text-3xl md:text-4xl font-bold tracking-tight uppercase">
-                    NUTRIÇÃO <span class="text-emerald-400">CLÍNICA E ESPORTIVA</span>
-                </h1>
-                <div class="flex flex-col items-center justify-center space-y-1 bg-slate-800/50 px-10 py-4 rounded-lg border border-slate-700">
-                    <h2 class="text-2xl font-bold text-white">Leandro Alves</h2>
-                    <p class="text-emerald-400 font-medium uppercase tracking-widest text-sm">Nutricionista</p>
-                    <p class="text-slate-400 text-xs font-mono">CRN2 20221</p>
-                </div>
-                <p class="text-slate-500 text-xs uppercase tracking-wide mt-2">Ficha de Pré-Consulta & Anamnese</p>
+    <!-- Header / Brand Area -->
+    <div class="bg-slate-900 text-white py-10 px-6 mb-8 border-b-4 border-emerald-500">
+        <div class="max-w-5xl mx-auto flex flex-col items-center text-center gap-6">
+            <h1 class="text-3xl md:text-4xl font-bold tracking-tight uppercase">
+                NUTRIÇÃO <span class="text-emerald-400">CLÍNICA E ESPORTIVA</span>
+            </h1>
+            <div class="flex flex-col items-center justify-center space-y-1 bg-slate-800/50 px-10 py-4 rounded-lg border border-slate-700">
+                <h2 class="text-2xl font-bold text-white">Leandro Alves</h2>
+                <p class="text-emerald-400 font-medium uppercase tracking-widest text-sm">Nutricionista</p>
+                <p class="text-slate-400 text-xs font-mono">CRN2 20221</p>
             </div>
+            <p class="text-slate-500 text-xs uppercase tracking-wide mt-2">Ficha de Pré-Consulta & Anamnese</p>
         </div>
+    </div>
 
-        <form action="https://formspree.io/f/mjkdbala" method="POST" class="max-w-5xl mx-auto px-6 pb-20 space-y-8" id="form-anamnese">
-            
-            <input type="hidden" name="_subject" id="email_subject" value="Nova Anamnese Recebida">
+    <!-- FORMULÁRIO -->
+    <form action="https://formspree.io/f/mjkdbala" method="POST" class="max-w-5xl mx-auto px-6 pb-20 space-y-8">
+        
+        <!-- BLOCO 1: DADOS PESSOAIS E ANTROPOMETRIA -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside">
+            <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
+                <div class="bg-slate-800 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</div>
+                <h2 class="font-bold text-slate-700">Dados Pessoais e Antropometria</h2>
+            </div>
+            <div class="p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
+                
+                <!-- Nome Completo -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Nome Completo</label>
+                    <input type="text" name="nome" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" required>
+                </div>
+                
+                <!-- Email -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">E-mail</label>
+                    <input type="email" name="email" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" required>
+                </div>
 
-            <!-- 1. DADOS PESSOAIS -->
-            <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside" data-pdf-title="Dados Pessoais">
-                <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
-                    <div class="bg-slate-800 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">1</div>
-                    <h2 class="font-bold text-slate-700">Dados Pessoais</h2>
+                <!-- Identidade de Gênero (INCLUSIVO) -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Identidade de Gênero <span class="text-xs font-normal text-slate-400">(Como você se identifica?)</span></label>
+                    <select id="identidade_genero" name="identidade_genero" onchange="verificarOutroGenero(this)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none text-slate-600">
+                        <option value="" disabled selected>Selecione...</option>
+                        <option>Mulher (Cis/Trans)</option>
+                        <option>Homem (Cis/Trans)</option>
+                        <option>Não-binário</option>
+                        <option>Prefiro não informar</option>
+                        <option value="Outro">Outro (Especifique)</option>
+                    </select>
+                    <input type="text" id="genero_outro" name="genero_outro_especifico" class="w-full mt-2 bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none hidden" placeholder="Qual?">
                 </div>
-                <div class="p-6 grid grid-cols-1 md:grid-cols-4 gap-6">
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">Nome Completo</label>
-                        <input type="text" name="01_Nome_Completo" id="nome_paciente" oninput="atualizarAssuntoEmail()" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" required>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">E-mail</label>
-                        <input type="email" name="02_Email" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" required>
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">Identidade de Gênero <span class="text-xs font-normal text-slate-400">(Como você se identifica?)</span></label>
-                        <select id="identidade_genero" name="03_Identidade_Genero" onchange="verificarOutroGenero(this)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none text-slate-600">
-                            <option value="" disabled selected>Selecione...</option>
-                            <option>Mulher</option>
-                            <option>Homem</option>
-                            <option>Não-binário</option>
-                            <option>Prefiro não informar</option>
-                            <option value="Outro">Outro (Especifique)</option>
-                        </select>
-                        <input type="text" id="genero_outro" name="03_Identidade_Genero_Outro" class="w-full mt-2 bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none hidden" placeholder="Qual?">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">Sexo Designado ao Nascer <span class="text-xs font-normal text-slate-400">(Para análise metabólica)</span></label>
-                        <select name="04_Sexo_Biologico" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none text-slate-600">
-                            <option value="" disabled selected>Selecione...</option>
-                            <option>Feminino</option>
-                            <option>Masculino</option>
-                            <option>Intersexo</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">Data de Nascimento</label>
-                        <input type="date" name="05_Data_Nascimento" id="dataNascimento" onchange="calcularIdade()" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">Idade</label>
-                        <input type="text" name="06_Idade" id="idadeOutput" readonly class="w-full bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-slate-500 font-bold" placeholder="--">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">WhatsApp</label>
-                        <input type="tel" name="07_Whatsapp" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
-                    </div>
-                    
-                    <div class="md:col-span-4 border-t border-slate-100 my-2"></div>
-                    
-                    <!-- Antropometria -->
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">Peso Atual (kg)</label>
-                        <input type="number" name="08_Peso_Atual" id="peso" oninput="calcularIMC()" step="0.1" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 75.5">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">Altura (m)</label>
-                        <input type="tel" name="09_Altura" id="altura" oninput="formatarAltura(this); calcularIMC()" maxlength="4" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 1,75">
-                    </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">IMC Calculado</label>
-                        <div class="flex gap-2">
-                            <input type="text" name="10_IMC_Valor" id="imcOutput" readonly class="w-1/3 bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-emerald-600 font-bold text-center" placeholder="--">
-                            <input type="text" name="10_IMC_Classificacao" id="imcClassificacao" readonly class="w-2/3 bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-slate-500 text-sm" placeholder="Classificação">
-                        </div>
-                    </div>
-                    
-                    <div class="md:col-span-4 pt-4 mt-2 border-t border-slate-100">
-                        <h3 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wide">Histórico de Peso</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-sm font-semibold text-slate-600 mb-1">Peso Habitual (kg)</label>
-                                <input type="number" step="0.1" name="11_Peso_Habitual" class="w-32 bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 70">
-                            </div>
-                            <div>
-                                <label class="block text-sm font-semibold text-slate-600 mb-2">Houve alteração recente?</label>
-                                <div class="flex flex-wrap gap-4 mb-3">
-                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="12_Alteracao_Peso" value="Sem alteração" class="text-emerald-500 focus:ring-emerald-500" onclick="togglePesoDetails(false)" checked><span class="text-sm">Sem alteração</span></label>
-                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="12_Alteracao_Peso" value="Ganhou (+)" class="text-emerald-500 focus:ring-emerald-500" onclick="togglePesoDetails(true)"><span class="text-sm">Ganhei (+)</span></label>
-                                    <label class="flex items-center gap-2 cursor-pointer"><input type="radio" name="12_Alteracao_Peso" value="Perdeu (-)" class="text-emerald-500 focus:ring-emerald-500" onclick="togglePesoDetails(true)"><span class="text-sm">Perdi (-)</span></label>
-                                </div>
-                                <div id="peso_details" class="hidden flex gap-3 items-end">
-                                    <div><label class="text-xs text-slate-500 font-bold">Quanto? (kg)</label><input type="number" step="0.1" name="13_Peso_Qtd_Alteracao" class="w-24 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 outline-none text-sm"></div>
-                                    <div class="flex-1"><label class="text-xs text-slate-500 font-bold">Tempo?</label><input type="text" name="13_Peso_Tempo_Alteracao" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 outline-none text-sm" placeholder="Ex: 2 meses"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
-            <!-- 2. OBJETIVOS -->
-            <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden p-6" data-pdf-title="Objetivos">
-                 <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
-                    <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</div>
-                    <h2 class="font-bold text-slate-700">Objetivos</h2>
+                <!-- Sexo Biológico (INCLUSIVO) -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Sexo Designado ao Nascer <span class="text-xs font-normal text-slate-400">(Para análise metabólica)</span></label>
+                    <select name="sexo_biologico" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none text-slate-600">
+                        <option value="" disabled selected>Selecione...</option>
+                        <option>Feminino</option>
+                        <option>Masculino</option>
+                        <option>Intersexo</option>
+                    </select>
                 </div>
-                <div class="p-6 space-y-6">
-                    <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">Objetivo Principal</label>
-                        <select id="objetivo_select" name="14_Objetivo_Principal" onchange="verificarOutroObjetivo(this)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none text-slate-600">
-                            <option>Hipertrofia (Ganho de Massa)</option>
-                            <option>Emagrecimento / Definição</option>
-                            <option>Performance Esportiva</option>
-                            <option>Reeducação Alimentar / Saúde</option>
-                            <option value="Outro">Outro</option>
-                        </select>
-                        <input type="text" id="objetivo_outro" name="14_Objetivo_Outro" class="w-full mt-3 bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none hidden" placeholder="Especifique...">
+
+                <!-- Data Nascimento e Idade -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Data de Nascimento</label>
+                    <input type="date" name="data_nascimento" id="dataNascimento" onchange="calcularIdade()" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Idade</label>
+                    <input type="text" name="idade" id="idadeOutput" readonly class="w-full bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-slate-500 font-bold" placeholder="--">
+                </div>
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Celular / WhatsApp</label>
+                    <input type="tel" name="whatsapp" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
+                </div>
+                
+                <div class="md:col-span-4 border-t border-slate-100 my-2"></div>
+                
+                <!-- Peso Atual -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Peso Atual (kg)</label>
+                    <input type="number" name="peso" id="peso" oninput="calcularIMC()" step="0.1" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 75.5">
+                </div>
+
+                <!-- Altura -->
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Altura (m)</label>
+                    <input type="tel" name="altura" id="altura" oninput="formatarAltura(this); calcularIMC()" maxlength="4" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 1,75">
+                </div>
+
+                <!-- IMC -->
+                <div class="md:col-span-2">
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">IMC Calculado</label>
+                    <div class="flex gap-2">
+                        <input type="text" name="imc_valor" id="imcOutput" readonly class="w-1/3 bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-emerald-600 font-bold text-center" placeholder="--">
+                        <input type="text" name="imc_classificacao" id="imcClassificacao" readonly class="w-2/3 bg-slate-100 border border-slate-300 rounded-lg px-4 py-2 text-slate-500 text-sm" placeholder="Classificação">
                     </div>
                 </div>
-            </section>
 
-            <!-- 3. TREINO -->
-            <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden p-6" data-pdf-title="Rotina de Treino">
-                 <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
-                    <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</div>
-                    <h2 class="font-bold text-slate-700">Rotina de Treino (Nutrição Esportiva)</h2>
-                </div>
-                <div class="p-6 space-y-6">
+                <!-- Histórico de Peso (NOVO LAYOUT) -->
+                <div class="md:col-span-4 pt-4 mt-2 border-t border-slate-100">
+                    <h3 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wide">Histórico de Peso</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div><label class="block text-sm font-semibold text-slate-600 mb-1">Modalidade Principal</label><input type="text" name="15_Modalidade_Treino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"></div>
-                        <div><label class="block text-sm font-semibold text-slate-600 mb-1">Horário</label><input type="time" name="16_Horario_Treino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none"></div>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
-                         <label class="block text-sm font-semibold text-slate-600 mb-3">Semana de Treinos</label>
-                         <p class="text-xs text-slate-500 mb-3">Descreva o treino de cada dia (Ex: Pernas, Costas, Cardio, Descanso). Isso é essencial para o planejamento.</p>
-                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
-                            <div><span class="text-xs font-bold text-slate-500">Segunda</span><input type="text" name="17_Treino_Segunda" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Pernas"></div>
-                            <div><span class="text-xs font-bold text-slate-500">Terça</span><input type="text" name="17_Treino_Terca" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Peito"></div>
-                            <div><span class="text-xs font-bold text-slate-500">Quarta</span><input type="text" name="17_Treino_Quarta" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Descanso"></div>
-                            <div><span class="text-xs font-bold text-slate-500">Quinta</span><input type="text" name="17_Treino_Quinta" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Costas"></div>
-                            <div><span class="text-xs font-bold text-slate-500">Sexta</span><input type="text" name="17_Treino_Sexta" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Ombros"></div>
-                            <div><span class="text-xs font-bold text-slate-500">Sábado</span><input type="text" name="17_Treino_Sabado" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Cardio"></div>
-                            <div><span class="text-xs font-bold text-slate-500">Domingo</span><input type="text" name="17_Treino_Domingo" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Descanso"></div>
-                         </div>
-                    </div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div><label class="block text-sm font-semibold text-slate-600 mb-1">Intensidade</label><div class="flex flex-col gap-1 mt-2"><label class="flex items-center gap-2 text-sm"><input type="radio" name="18_Intensidade" value="Leve" class="text-emerald-500"> Leve</label><label class="flex items-center gap-2 text-sm"><input type="radio" name="18_Intensidade" value="Moderada" class="text-emerald-500"> Moderada</label><label class="flex items-center gap-2 text-sm"><input type="radio" name="18_Intensidade" value="Alta" class="text-emerald-500"> Alta</label></div></div>
-                        <div><label class="block text-sm font-semibold text-slate-600 mb-1">Duração</label><input type="text" name="19_Duracao_Treino" class="w-24 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 1:30"></div>
+                        
+                        <!-- Peso Habitual (Pequeno) -->
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600 mb-1">Peso Habitual (kg)</label>
+                            <input type="number" step="0.1" name="peso_habitual" class="w-32 bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 70">
+                        </div>
+
+                        <!-- Alteração de Peso (Interativo) -->
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600 mb-2">Houve alteração recente?</label>
+                            
+                            <!-- Opções -->
+                            <div class="flex flex-wrap gap-4 mb-3">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="tipo_alteracao_peso" value="Sem alteração" class="text-emerald-500 focus:ring-emerald-500" onclick="togglePesoDetails(false)" checked>
+                                    <span class="text-sm">Sem alteração</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="tipo_alteracao_peso" value="Ganhou (+)" class="text-emerald-500 focus:ring-emerald-500" onclick="togglePesoDetails(true)">
+                                    <span class="text-sm">Ganhei (+)</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="tipo_alteracao_peso" value="Perdeu (-)" class="text-emerald-500 focus:ring-emerald-500" onclick="togglePesoDetails(true)">
+                                    <span class="text-sm">Perdi (-)</span>
+                                </label>
+                            </div>
+
+                            <!-- Campos Escondidos -->
+                            <div id="peso_details" class="hidden flex gap-3 items-end">
+                                <div>
+                                    <label class="text-xs text-slate-500 font-bold">Quanto? (kg)</label>
+                                    <input type="number" step="0.1" name="peso_qtd_alteracao" class="w-24 bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 outline-none text-sm focus:ring-1 focus:ring-emerald-500" placeholder="Ex: 3">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="text-xs text-slate-500 font-bold">Em quanto tempo?</label>
+                                    <input type="text" name="peso_tempo_alteracao" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 outline-none text-sm focus:ring-1 focus:ring-emerald-500" placeholder="Ex: 2 meses, 15 dias">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
-            </section>
 
-            <!-- 4. SAÚDE -->
-            <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden p-6" data-pdf-title="Saúde e Metabolismo">
-                 <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
-                    <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4</div>
-                    <h2 class="font-bold text-slate-700">Saúde e Metabolismo</h2>
+            </div>
+        </section>
+
+        <!-- BLOCO 2: OBJETIVOS -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside">
+             <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
+                <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</div>
+                <h2 class="font-bold text-slate-700">Objetivos</h2>
+            </div>
+            <div class="p-6 space-y-6">
+                <div>
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Qual seu objetivo principal hoje?</label>
+                    <select id="objetivo_select" name="objetivo_principal" onchange="verificarOutroObjetivo(this)" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none text-slate-600">
+                        <option>Hipertrofia (Ganho de Massa)</option>
+                        <option>Emagrecimento / Definição</option>
+                        <option>Performance Esportiva</option>
+                        <option>Reeducação Alimentar / Saúde</option>
+                        <option value="Outro">Outro (Especifique abaixo)</option>
+                    </select>
+                    
+                    <!-- Campo 'Outro' escondido inicialmente -->
+                    <input type="text" id="objetivo_outro" name="objetivo_outro_especifico" class="w-full mt-3 bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none hidden" placeholder="Digite seu objetivo aqui...">
                 </div>
-                <div class="p-6 space-y-6">
-                     
-                     <!-- TABAGISMO (NOVO) -->
-                     <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-2">Tabagismo</label>
-                        <div class="flex gap-4 items-center mb-2">
-                            <label class="flex items-center gap-2 text-sm"><input type="radio" name="21_Tabagismo" value="Não" class="text-emerald-500" onclick="toggleTabagismo(false)" checked> Não</label>
-                            <label class="flex items-center gap-2 text-sm"><input type="radio" name="21_Tabagismo" value="Sim" class="text-emerald-500" onclick="toggleTabagismo(true)"> Sim</label>
+            </div>
+        </section>
+
+        <!-- BLOCO 3: TREINO -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside">
+             <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
+                <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</div>
+                <h2 class="font-bold text-slate-700">Rotina de Treino <span class="text-xs font-normal text-slate-500 ml-1">(Nutrição Esportiva)</span></h2>
+            </div>
+            <div class="p-6 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-1">Modalidade Principal</label>
+                        <input type="text" name="modalidade" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                    <div>
+                         <label class="block text-sm font-semibold text-slate-600 mb-1">Horário Habitual</label>
+                        <input type="time" name="horario_treino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none">
+                    </div>
+                </div>
+
+                <!-- Distribuição Semanal de Treinos -->
+                <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                     <label class="block text-sm font-semibold text-slate-600 mb-3">Distribuição Semanal do Treino</label>
+                     <p class="text-xs text-slate-500 mb-3">Marque os dias de treino e especifique a modalidade ou grupo muscular (Ex: Musculação/Pernas, Corrida, Descanso).</p>
+                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Segunda</span>
+                            <input type="text" name="treino_segunda" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Pernas">
                         </div>
-                        <input type="text" id="tabagismo_qtd" name="21_Tabagismo_Qtd" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm hidden" placeholder="Quantos cigarros/dia?">
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Terça</span>
+                            <input type="text" name="treino_terca" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Peito">
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Quarta</span>
+                            <input type="text" name="treino_quarta" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Descanso">
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Quinta</span>
+                            <input type="text" name="treino_quinta" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Costas">
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Sexta</span>
+                            <input type="text" name="treino_sexta" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Ombros">
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Sábado</span>
+                            <input type="text" name="treino_sabado" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Cardio">
+                        </div>
+                        <div>
+                            <span class="text-xs font-bold text-slate-500">Domingo</span>
+                            <input type="text" name="treino_domingo" class="w-full border border-slate-300 rounded px-2 py-1 text-sm" placeholder="Ex: Descanso">
+                        </div>
+                     </div>
+                </div>
+
+                <!-- Campo Intensidade e Duração -->
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-1">Intensidade Média</label>
+                        <div class="flex flex-col gap-1 mt-2">
+                            <label class="flex items-center gap-2 text-sm"><input type="radio" name="intensidade" value="Leve" class="text-emerald-500"> Leve</label>
+                            <label class="flex items-center gap-2 text-sm"><input type="radio" name="intensidade" value="Moderada" class="text-emerald-500"> Moderada</label>
+                            <label class="flex items-center gap-2 text-sm"><input type="radio" name="intensidade" value="Alta" class="text-emerald-500"> Alta</label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-1">Duração Média</label>
+                        <input type="text" name="duracao_treino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 1h 30min">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BLOCO EXAMES DE SANGUE (SEM UPLOAD - INSTRUÇÃO DE ENVIO) -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside">
+             <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
+                <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm"><i class="fa-solid fa-microscope"></i></div>
+                <h2 class="font-bold text-slate-700">Exames Laboratoriais</h2>
+            </div>
+            <div class="p-6">
+                
+                <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200 mb-4 flex items-start gap-3">
+                    <i class="fa-brands fa-whatsapp text-emerald-600 text-xl mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-emerald-800 text-sm">Envio de Arquivos</h4>
+                        <p class="text-sm text-emerald-700">Por favor, envie as fotos ou PDF dos seus exames diretamente pelo <strong>WhatsApp</strong> ou para o e-mail <strong>nutrilealves@gmail.com</strong>.</p>
+                    </div>
+                </div>
+
+                <label class="block text-sm font-semibold text-slate-600 mb-1">Observações sobre Exames</label>
+                <p class="text-xs text-slate-500 mb-2">Se preferir, digite os resultados principais abaixo (Colesterol, Glicose, Ferro...).</p>
+                <textarea name="exames_recentes" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none h-24 resize-none"></textarea>
+            </div>
+        </section>
+
+        <!-- BLOCO 4: SAÚDE & FISIOLOGIA -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside">
+             <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
+                <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4</div>
+                <h2 class="font-bold text-slate-700">Saúde e Metabolismo</h2>
+            </div>
+            <div class="p-6 space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Comorbidades -->
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-semibold text-slate-600 mb-1">Possui Comorbidades? (Doenças Crônicas)</label>
+                        <input type="text" name="comorbidades" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: Diabetes, Hipertensão, Hipotireoidismo, Colesterol Alto...">
                     </div>
 
-                    <!-- ÁLCOOL (NOVO) -->
                     <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-2">Bebidas Alcoólicas</label>
-                        <div class="flex gap-4 items-center mb-2">
-                            <label class="flex items-center gap-2 text-sm"><input type="radio" name="22_Alcool" value="Não" class="text-emerald-500" onclick="toggleAlcool(false)" checked> Não</label>
-                            <label class="flex items-center gap-2 text-sm"><input type="radio" name="22_Alcool" value="Sim" class="text-emerald-500" onclick="toggleAlcool(true)"> Sim</label>
-                        </div>
-                        <input type="text" id="alcool_detalhe" name="22_Alcool_Tipo_Qtd" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm hidden" placeholder="Qual tipo e quantidade?">
+                        <label class="block text-sm font-semibold text-slate-600 mb-1">Outros Diagnósticos ou Lesões</label>
+                        <input type="text" name="diagnosticos" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: Gastrite, Lesão no joelho...">
+                    </div>
+                    
+                    <!-- Medicamentos com Motivo -->
+                    <div>
+                        <label class="block text-sm font-semibold text-slate-600 mb-1">Medicamentos em uso</label>
+                        <textarea name="medicamentos" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none h-20 resize-none" placeholder="Nome - Motivo - Dosagem&#10;Ex: Losartana (Pressão) 50mg"></textarea>
                     </div>
 
-                    <!-- SONO (NOVO) -->
+                    <!-- Suplementos e Objetivo -->
+                    <div class="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-6 pt-2 border-t border-slate-100">
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600 mb-1">Suplementos Atuais</label>
+                            <input type="text" name="suplementos" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: Whey, Creatina, Cafeína...">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-semibold text-slate-600 mb-1">Objetivo com os Suplementos</label>
+                            <input type="text" name="objetivo_suplementos" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: Ganho de massa, Mais energia...">
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- SESSÃO FISIOLÓGICA: INTESTINO E URINA -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
+                    <!-- Frequência Intestinal (SIMPLIFICADO) -->
                     <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-1">Sono (Horas por noite)</label>
-                        <select name="23_Sono_Horas" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2">
-                            <option value="" disabled selected>Selecione...</option>
-                            <option>Menos de 4h</option><option>4h a 5h</option><option>5h a 6h</option><option>6h a 7h</option><option>7h a 8h</option><option>8h a 9h</option><option>Mais de 9h</option>
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">Frequência Intestinal</label>
+                        <select name="frequencia_intestino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 outline-none text-slate-600 text-sm">
+                            <option value="" disabled selected>Quantas vezes vai ao banheiro?</option>
+                            <option>1 vez ao dia</option>
+                            <option>2 a 3 vezes ao dia</option>
+                            <option>Dia sim, dia não</option>
+                            <option>A cada 2-3 dias</option>
+                            <option>Mais de 3 vezes ao dia</option>
                         </select>
                     </div>
 
-                    <!-- DISTÚRBIOS MENSTRUAIS (NOVO) -->
+                    <!-- Hidratação (Atualizado) -->
                     <div>
-                        <label class="block text-sm font-semibold text-slate-600 mb-2">Distúrbios Menstruais</label>
-                        <div class="flex gap-4 items-center mb-2">
-                            <label class="flex items-center gap-2 text-sm"><input type="radio" name="24_Disturbios_Menstruais" value="Não" class="text-emerald-500" onclick="toggleMenstrual(false)" checked> Não</label>
-                            <label class="flex items-center gap-2 text-sm"><input type="radio" name="24_Disturbios_Menstruais" value="Sim" class="text-emerald-500" onclick="toggleMenstrual(true)"> Sim</label>
-                        </div>
-                        <input type="text" id="menstrual_quais" name="24_Disturbios_Menstruais_Quais" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-3 py-2 text-sm hidden" placeholder="Quais?">
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">Consumo de Água Diário</label>
+                        <select name="hidratacao" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 outline-none text-slate-600 text-sm">
+                            <option value="" disabled selected>Selecione a quantidade...</option>
+                            <option>Menos de 1 Litro</option>
+                            <option>1 a 2 Litros</option>
+                            <option>2 a 3 Litros</option>
+                            <option>3 a 4 Litros</option>
+                            <option>Mais de 4 Litros</option>
+                        </select>
                     </div>
 
-                     <div class="bg-emerald-50 p-4 rounded-lg border border-emerald-200 mb-4 flex items-start gap-3 mt-6"><i class="fa-brands fa-whatsapp text-emerald-600 text-xl mt-1"></i><div><h4 class="font-bold text-emerald-800 text-sm">Envio de Exames</h4><p class="text-sm text-emerald-700">Envie fotos/PDF dos exames pelo WhatsApp ou E-mail: <span class="font-bold select-all">nutrilealves@gmail.com</span></p></div></div>
-                     
-                     <label class="block text-sm font-semibold text-slate-600 mb-1">Observações sobre Exames</label>
-                     <p class="text-xs text-slate-500 mb-2">Liste os resultados principais se souber.</p>
-                     <textarea name="20_Exames_Texto" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 h-12 resize-none" placeholder="Digite aqui..."></textarea>
-                     
-                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div><label class="block text-sm font-semibold text-slate-600 mb-1">Possui Comorbidades e alergias alimentares? (Doenças Crônicas e Intolerância)</label><input type="text" name="25_Comorbidades" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2" placeholder="Ex: diabetes, hipertensão, doença celiaca, intolerancias..."></div>
-                        <div><label class="block text-sm font-semibold text-slate-600 mb-1">Outros Diagnósticos</label><input type="text" name="26_Outros_Diagnosticos" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2" placeholder="Ex: Gastrite, Lesão no joelho..."></div>
-                        
-                        <!-- NOVOS CAMPOS ADICIONADOS -->
-                        <div><label class="block text-sm font-semibold text-slate-600 mb-1">Usa açúcar ou adoçante?</label><input type="text" name="usa_acucar" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2" placeholder="Qual e quantidade?"></div>
-                        <div><label class="block text-sm font-semibold text-slate-600 mb-1">Consumo de óleo (latas/mês)</label><input type="text" name="consumo_oleo" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2" placeholder="Quantidade aproximada"></div>
-                        <div><label class="block text-sm font-semibold text-slate-600 mb-1">Consumo de sal (kg/mês)</label><input type="text" name="consumo_sal" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2" placeholder="Quantidade aproximada"></div>
-                        <!-- FIM NOVOS CAMPOS -->
-    
-                        <div><label class="block text-sm font-semibold text-slate-600 mb-1">Medicamentos em uso</label><textarea name="27_Medicamentos" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 h-20 resize-none" placeholder="Nome - Motivo - Dosagem (Ex: Losartana - Pressão - 50mg)"></textarea></div>
-                        <div class="grid grid-cols-1 gap-2">
-                            <div><label class="block text-sm font-semibold text-slate-600 mb-1">Suplementos Atuais</label><input type="text" name="28_Suplementos" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2" placeholder="Ex: Whey, Creatina..."></div>
-                            <div><label class="block text-sm font-semibold text-slate-600 mb-1">Objetivo com os Suplementos</label><input type="text" name="29_Objetivo_Suplementos" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2" placeholder="Ex: Ganho de massa/força..."></div>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-100">
-                        <div><label class="block text-sm font-semibold text-slate-600 mb-2">Frequência Intestinal</label><select name="30_Freq_Intestino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2"><option value="" disabled selected>Quantas vezes vai ao banheiro?</option><option>1 vez ao dia</option><option>2 a 3 vezes ao dia</option><option>Dia sim, dia não</option><option>A cada 2-3 dias</option><option>Mais de 3 vezes ao dia</option></select></div>
-                        <div><label class="block text-sm font-semibold text-slate-600 mb-2">Consumo de Água Diário</label><select name="31_Agua" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2"><option value="" disabled selected>Selecione a quantidade...</option><option>Menos de 1 Litro</option><option>1 a 2 Litros</option><option>2 a 3 Litros</option><option>3 a 4 Litros</option><option>Mais de 4 Litros</option></select></div>
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-600 mb-2">Formato das Fezes (Escala de Bristol)</label>
-                            <select name="32_Fezes_Bristol" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2"><option value="" disabled selected>Selecione o formato...</option><option>Tipo 1: Caroços duros e separados</option><option>Tipo 2: Salsicha encaroçada</option><option>Tipo 3: Salsicha com rachaduras</option><option>Tipo 4: Salsicha lisa e mole (Ideal)</option><option>Tipo 5: Pedaços moles com bordas nítidas</option><option>Tipo 6: Pedaços aerados/pastosos</option><option>Tipo 7: Totalmente líquido</option></select>
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-slate-600 mb-2">Coloração da Urina</label>
-                            <select name="33_Urina" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2"><option value="" disabled selected>Selecione a cor...</option><option>⚪ Transparente</option><option>🟡 Amarelo Palha/Claro (Ideal)</option><option>🌕 Amarelo Ouro</option><option>🟠 Escuro</option><option>🔴 Laranja</option></select>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- RECORDATÓRIO ALIMENTAR RESTAURADO -->
-            <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside" data-pdf-title="Recordatório Alimentar">
-                <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
-                    <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">6</div>
-                    <h2 class="font-bold text-slate-700">Recordatório Alimentar</h2>
-                </div>
-                
-                <!-- MENSAGEM RESTAURADA -->
-                <div class="bg-emerald-50 p-6 border-b border-emerald-100">
-                    <div class="flex items-start gap-3">
-                        <i class="fa-solid fa-heart-circle-check text-emerald-600 text-2xl mt-1"></i>
-                        <div>
-                            <h4 class="font-bold text-emerald-800 text-sm uppercase mb-1">Importante: Precisão é fundamental!</h4>
-                            <p class="text-sm text-emerald-700 leading-relaxed">
-                                Para montarmos sua dieta, preciso calcular exatamente o que você consome hoje. <span class="font-bold">Não se preocupe em ser "saudável" aqui, preocupe-se em ser honesto(a).</span><br>
-                                Descreva exatamente o que come (com marcas, molhos, beliscos) e as quantidades reais. É com base nisso que faremos os ajustes calóricos e nutricionais necessários para seu objetivo. Sem julgamentos, apenas técnica!
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- PREFERÊNCIAS E AVERSÕES -->
-                <div class="p-6 border-b border-slate-100 grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Intestino (Bristol Limpo - Sem Emojis) -->
                     <div>
-                        <label class="block text-sm font-semibold text-red-500 mb-1">AVERSÕES (O que NÃO come)</label>
-                        <textarea name="refeicao_aversoes" class="w-full bg-red-50 border border-red-100 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-200 outline-none h-20 resize-none" placeholder="Ex: Fígado, Jiló, Peixe cru..."></textarea>
+                         <label class="block text-sm font-semibold text-slate-600 mb-2">Formato das Fezes (Escala de Bristol)</label>
+                         <select name="intestino" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 outline-none text-slate-600 text-sm">
+                            <option value="" disabled selected>Selecione o formato que mais se parece...</option>
+                            <option>Tipo 1: Caroços duros e separados (Difícil de sair)</option>
+                            <option>Tipo 2: Forma de salsicha, mas encaroçada</option>
+                            <option>Tipo 3: Salsicha com rachaduras</option>
+                            <option>Tipo 4: Salsicha lisa e mole (Ideal)</option>
+                            <option>Tipo 5: Pedaços moles com bordas nítidas</option>
+                            <option>Tipo 6: Pedaços aerados/pastosos (Diarréia leve)</option>
+                            <option>Tipo 7: Totalmente líquido (Diarréia)</option>
+                        </select>
                     </div>
+
+                    <!-- Urina (Cores com Emojis/Círculos) -->
                     <div>
-                        <label class="block text-sm font-semibold text-emerald-600 mb-1">PREFERÊNCIAS (O que AMA)</label>
-                        <textarea name="refeicao_preferencias" class="w-full bg-emerald-50 border border-emerald-100 rounded-lg px-4 py-2 focus:ring-2 focus:ring-emerald-200 outline-none h-20 resize-none" placeholder="Ex: Café, Chocolate, Pão, Arroz e Feijão..."></textarea>
+                        <label class="block text-sm font-semibold text-slate-600 mb-2">Coloração da Urina</label>
+                        <select name="urina" class="w-full bg-slate-50 border border-slate-300 rounded-lg px-4 py-2 outline-none text-slate-600 text-sm">
+                            <option value="" disabled selected>Selecione a cor...</option>
+                            <option>⚪ Transparente</option>
+                            <option>🟡 Amarelo Palha/Claro (Ideal)</option>
+                            <option>🌕 Amarelo Ouro</option>
+                            <option>🟠 Amarelo Escuro/Âmbar</option>
+                            <option>🔴 Laranja/Acastanhado</option>
+                        </select>
                     </div>
                 </div>
+            </div>
+        </section>
 
-                <div class="p-6 space-y-8">
-                    
-                    <!-- Café da Manhã -->
-                    <div class="border p-4 rounded bg-slate-50">
-                        <div class="flex justify-between mb-2 font-bold text-emerald-800"><span>☕ Café da Manhã</span><input type="time" name="[REFEICAO]_01_Cafe_Horario" class="bg-white border px-2 py-1 text-xs rounded"></div>
-                        <div class="space-y-2">
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_01_Cafe_Item_1_Alimento" class="w-2/3 p-2 border rounded text-sm" placeholder="Ex: Pão francês"><input type="text" name="[REFEICAO]_01_Cafe_Item_1_Qtd" class="w-1/3 p-2 border rounded text-sm" placeholder="Ex: 1 unidade"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_01_Cafe_Item_2_Alimento" class="w-2/3 p-2 border rounded text-sm" placeholder="Ex: Café preto"><input type="text" name="[REFEICAO]_01_Cafe_Item_2_Qtd" class="w-1/3 p-2 border rounded text-sm" placeholder="Ex: 1 xícara"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_01_Cafe_Item_3_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_01_Cafe_Item_3_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_01_Cafe_Item_4_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_01_Cafe_Item_4_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_01_Cafe_Item_5_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_01_Cafe_Item_5_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                        </div>
+        <!-- BLOCO 6: RECORDATÓRIO ALIMENTAR -->
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden print-break-inside">
+            <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
+                <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">6</div>
+                <h2 class="font-bold text-slate-700">Recordatório Alimentar</h2>
+            </div>
+            
+            <!-- MENSAGEM DE INCENTIVO À HONESTIDADE -->
+            <div class="bg-emerald-50 p-6 border-b border-emerald-100">
+                <div class="flex items-start gap-3">
+                    <i class="fa-solid fa-heart-circle-check text-emerald-600 text-2xl mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-emerald-800 text-sm uppercase mb-1">Importante: Precisão é fundamental!</h4>
+                        <p class="text-sm text-emerald-700 leading-relaxed">
+                            Para montarmos sua dieta, preciso calcular exatamente o que você consome hoje. <span class="font-bold">Não se preocupe em ser "saudável" aqui, preocupe-se em ser honesto(a).</span><br>
+                            Descreva exatamente o que come (com marcas, molhos, beliscos) e as quantidades reais. É com base nisso que faremos os ajustes calóricos e nutricionais necessários para seu objetivo. Sem julgamentos, apenas técnica!
+                        </p>
                     </div>
-                    
-                     <!-- Lanche da Manhã (NOVO - 3 Linhas) -->
-                    <div class="border p-4 rounded bg-slate-50">
-                        <div class="flex justify-between mb-2 font-bold text-emerald-800"><span>🍎 Lanche da Manhã</span><input type="time" name="[REFEICAO]_02_LancheManha_Horario" class="bg-white border px-2 py-1 text-xs rounded"></div>
-                        <div class="space-y-2">
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_02_LancheManha_Item_1_Alimento" class="w-2/3 p-2 border rounded text-sm" placeholder="Ex: Maçã"><input type="text" name="[REFEICAO]_02_LancheManha_Item_1_Qtd" class="w-1/3 p-2 border rounded text-sm" placeholder="Ex: 1 unidade"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_02_LancheManha_Item_2_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_02_LancheManha_Item_2_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_02_LancheManha_Item_3_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_02_LancheManha_Item_3_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                        </div>
-                    </div>
-
-                    <!-- Almoço -->
-                    <div class="border p-4 rounded bg-slate-50">
-                        <div class="flex justify-between mb-2 font-bold text-emerald-800"><span>🥗 Almoço</span><input type="time" name="[REFEICAO]_03_Almoco_Horario" class="bg-white border px-2 py-1 text-xs rounded"></div>
-                        <div class="space-y-2">
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_03_Almoco_Item_1_Alimento" class="w-2/3 p-2 border rounded text-sm" placeholder="Ex: Arroz branco/integral"><input type="text" name="[REFEICAO]_03_Almoco_Item_1_Qtd" class="w-1/3 p-2 border rounded text-sm" placeholder="Ex: 4 colheres de sopa"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_03_Almoco_Item_2_Alimento" class="w-2/3 p-2 border rounded text-sm" placeholder="Ex: Feijão"><input type="text" name="[REFEICAO]_03_Almoco_Item_2_Qtd" class="w-1/3 p-2 border rounded text-sm" placeholder="Ex: 1 concha"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_03_Almoco_Item_3_Alimento" class="w-2/3 p-2 border rounded text-sm" placeholder="Ex: Frango grelhado"><input type="text" name="[REFEICAO]_03_Almoco_Item_3_Qtd" class="w-1/3 p-2 border rounded text-sm" placeholder="Ex: 1 filé médio"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_03_Almoco_Item_4_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_03_Almoco_Item_4_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_03_Almoco_Item_5_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_03_Almoco_Item_5_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_03_Almoco_Item_6_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_03_Almoco_Item_6_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_03_Almoco_Item_7_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_03_Almoco_Item_7_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                        </div>
-                    </div>
-
-                    <!-- Lanche -->
-                    <div class="border p-4 rounded bg-slate-50">
-                        <div class="flex justify-between mb-2 font-bold text-emerald-800"><span>🥪 Lanche Tarde</span><input type="time" name="[REFEICAO]_04_Lanche_Horario" class="bg-white border px-2 py-1 text-xs rounded"></div>
-                        <div class="space-y-2">
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_04_Lanche_Item_1_Alimento" class="w-2/3 p-2 border rounded text-sm" placeholder="Ex: Iogurte"><input type="text" name="[REFEICAO]_04_Lanche_Item_1_Qtd" class="w-1/3 p-2 border rounded text-sm" placeholder="Ex: 1 pote"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_04_Lanche_Item_2_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_04_Lanche_Item_2_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_04_Lanche_Item_3_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_04_Lanche_Item_3_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_04_Lanche_Item_4_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_04_Lanche_Item_4_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_04_Lanche_Item_5_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_04_Lanche_Item_5_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                        </div>
-                    </div>
-
-                    <!-- Jantar -->
-                    <div class="border p-4 rounded bg-slate-50">
-                        <div class="flex justify-between mb-2 font-bold text-emerald-800"><span>🍲 Jantar</span><input type="time" name="[REFEICAO]_05_Jantar_Horario" class="bg-white border px-2 py-1 text-xs rounded"></div>
-                        <div class="space-y-2">
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_05_Jantar_Item_1_Alimento" class="w-2/3 p-2 border rounded text-sm" placeholder="Ex: Salada"><input type="text" name="[REFEICAO]_05_Jantar_Item_1_Qtd" class="w-1/3 p-2 border rounded text-sm" placeholder="Ex: à vontade"></div>
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_05_Jantar_Item_2_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_05_Jantar_Item_2_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_05_Jantar_Item_3_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_05_Jantar_Item_3_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_05_Jantar_Item_4_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_05_Jantar_Item_4_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_05_Jantar_Item_5_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_05_Jantar_Item_5_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_05_Jantar_Item_6_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_05_Jantar_Item_6_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_05_Jantar_Item_7_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_05_Jantar_Item_7_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                        </div>
-                    </div>
-
-                    <!-- Pré-Treino (5 Linhas) -->
-                    <div class="border p-4 rounded bg-slate-50">
-                        <div class="flex justify-between mb-2 font-bold text-emerald-800"><span>⚡ Pré-Treino <span class="text-xs font-normal text-slate-500">(Nutrição Esportiva)</span></span><input type="time" name="[REFEICAO]_06_PreTreino_Horario" class="bg-white border px-2 py-1 text-xs rounded"></div>
-                        <div class="space-y-2">
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_06_PreTreino_Item_1_Alimento" class="w-2/3 p-2 border rounded text-sm" placeholder="Ex: Banana"><input type="text" name="[REFEICAO]_06_PreTreino_Item_1_Qtd" class="w-1/3 p-2 border rounded text-sm" placeholder="Ex: 1 un"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_06_PreTreino_Item_2_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_06_PreTreino_Item_2_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_06_PreTreino_Item_3_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_06_PreTreino_Item_3_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_06_PreTreino_Item_4_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_06_PreTreino_Item_4_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_06_PreTreino_Item_5_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_06_PreTreino_Item_5_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                        </div>
-                    </div>
-
-                     <!-- Pós-Treino (5 Linhas) -->
-                    <div class="border p-4 rounded bg-slate-50">
-                        <div class="flex justify-between mb-2 font-bold text-emerald-800"><span>💪 Pós-Treino <span class="text-xs font-normal text-slate-500">(Nutrição Esportiva)</span></span><input type="time" name="[REFEICAO]_07_PosTreino_Horario" class="bg-white border px-2 py-1 text-xs rounded"></div>
-                        <div class="space-y-2">
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_07_PosTreino_Item_1_Alimento" class="w-2/3 p-2 border rounded text-sm" placeholder="Ex: Whey"><input type="text" name="[REFEICAO]_07_PosTreino_Item_1_Qtd" class="w-1/3 p-2 border rounded text-sm" placeholder="Ex: 1 scoop"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_07_PosTreino_Item_2_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_07_PosTreino_Item_2_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_07_PosTreino_Item_3_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_07_PosTreino_Item_3_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_07_PosTreino_Item_4_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_07_PosTreino_Item_4_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_07_PosTreino_Item_5_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_07_PosTreino_Item_5_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                        </div>
-                    </div>
-
-                     <!-- Ceia -->
-                    <div class="border p-4 rounded bg-slate-50">
-                        <div class="flex justify-between mb-2 font-bold text-emerald-800"><span>🌙 Ceia</span><input type="time" name="[REFEICAO]_09_Ceia_Horario" class="bg-white border px-2 py-1 text-xs rounded"></div>
-                        <div class="space-y-2">
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_09_Ceia_Item_1_Alimento" class="w-2/3 p-2 border rounded text-sm" placeholder="Ex: Chá"><input type="text" name="[REFEICAO]_09_Ceia_Item_1_Qtd" class="w-1/3 p-2 border rounded text-sm" placeholder="Ex: 1 xícara"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_09_Ceia_Item_2_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_09_Ceia_Item_2_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_09_Ceia_Item_3_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_09_Ceia_Item_3_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                        </div>
-                    </div>
-
-                    <!-- Outra Refeição (4 Linhas com título editável) -->
-                    <div class="border p-4 rounded bg-slate-50">
-                        <div class="flex justify-between items-center mb-2"><input type="text" name="[REFEICAO]_10_Titulo_Outra" value="Outra Refeição" class="font-bold text-emerald-800 bg-slate-200 border-b border-dashed outline-none w-1/2 p-1 rounded" placeholder="Nome da Refeição"><input type="time" name="[REFEICAO]_10_Outra_Horario" class="bg-white border px-2 py-1 text-xs rounded"></div>
-                        <div class="space-y-2">
-                            <div class="flex gap-2"><input type="text" name="[REFEICAO]_10_Outra_Item_1_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_10_Outra_Item_1_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_10_Outra_Item_2_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_10_Outra_Item_2_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_10_Outra_Item_3_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_10_Outra_Item_3_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                             <div class="flex gap-2"><input type="text" name="[REFEICAO]_10_Outra_Item_4_Alimento" class="w-2/3 p-2 border rounded text-sm"><input type="text" name="[REFEICAO]_10_Outra_Item_4_Qtd" class="w-1/3 p-2 border rounded text-sm"></div>
-                        </div>
-                    </div>
-
-                    <!-- Finais de Semana -->
-                    <div class="border border-emerald-200 rounded-lg p-4 bg-emerald-50">
-                        <div class="font-bold text-emerald-800 mb-2">🗓️ Finais de Semana</div>
-                        <p class="text-xs text-emerald-700 mb-2">Descreva resumidamente como sua alimentação muda no sábado e domingo.</p>
-                        <textarea name="99_Finais_Semana" class="w-full p-3 border border-emerald-300 rounded-lg text-sm outline-none h-24 resize-none bg-white"></textarea>
-                    </div>
-                    
-                    <!-- Rotina e Observações -->
-                     <div class="bg-slate-50 p-6 border-t border-slate-200 mt-6">
-                        <label class="block text-sm font-semibold text-slate-600 mb-2">Rotina Resumida</label>
-                        <p class="text-xs text-slate-500 mb-2">Me explique de forma resumida como é a sua rotina (quem faz a comida, come fora, leva marmita, etc.):</p>
-                        <textarea name="99_Rotina_Resumida" class="w-full bg-white border border-slate-300 rounded-lg px-4 py-3 h-24 resize-none mb-4"></textarea>
-
-                        <label class="block text-sm font-semibold text-slate-600 mb-2">Observações Adicionais</label>
-                        <p class="text-xs text-slate-500 mb-2">Existe algo mais que você acha importante me contar? (Hábitos, horários específicos, sentimentos em relação à comida, etc.)</p>
-                        <textarea name="99_Observacoes_Finais" class="w-full bg-white border border-slate-300 rounded-lg px-4 py-3 h-32 resize-none"></textarea>
-                    </div>
-
                 </div>
-            </section>
-
-            <!-- Botões de Ação -->
-            <div class="no-print flex flex-col md:flex-row justify-center items-center gap-4 pt-8">
-                <!-- Botão Enviar para E-mail -->
-                <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-10 rounded-full shadow-xl transform transition hover:-translate-y-1 flex items-center gap-2 cursor-pointer w-full md:w-auto justify-center">
-                    <i class="fa-solid fa-paper-plane"></i> Enviar Ficha para o Nutricionista
-                </button>
-                
-                <!-- Botão Salvar PDF (Agora com geração automática) -->
-                <button type="button" onclick="gerarPDF()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-10 rounded-full shadow-xl transform transition hover:-translate-y-1 flex items-center gap-2 cursor-pointer w-full md:w-auto justify-center">
-                    <i class="fa-solid fa-file-pdf"></i> Baixar PDF Preenchido
-                </button>
             </div>
 
-        </form>
-    </div>
+            <div class="p-6 space-y-8">
+                
+                <!-- Café da Manhã (5 Linhas) -->
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                    <div class="flex justify-between items-center mb-2"><div class="font-bold text-emerald-800">☕ Café da Manhã</div><input type="time" name="cafe_horario" class="bg-white border border-slate-300 rounded px-2 py-1 text-sm"></div>
+                    <div class="space-y-2">
+                        <div class="flex gap-2"><input type="text" name="cafe_alimento_1" class="w-2/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: Pão de forma"><input type="text" name="cafe_qtd_1" class="w-1/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: 2 fatias"></div>
+                        <div class="flex gap-2"><input type="text" name="cafe_alimento_2" class="w-2/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: Queijo minas"><input type="text" name="cafe_qtd_2" class="w-1/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: 1 fatia média"></div>
+                        <div class="flex gap-2"><input type="text" name="cafe_alimento_3" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="cafe_qtd_3" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="cafe_alimento_4" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="cafe_qtd_4" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="cafe_alimento_5" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="cafe_qtd_5" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                    </div>
+                </div>
 
-    <!-- Template Oculto para Gerar PDF (Relatório Limpo) -->
-    <div id="pdf-template">
-        <div class="header">
-            <h1>ANAMNESE NUTRICIONAL</h1>
-            <p class="sub">Leandro Alves - Nutricionista Esportivo | Gerado em: <span id="pdf-data"></span></p>
+                <!-- Almoço (7 Linhas) -->
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                    <div class="flex justify-between items-center mb-2"><div class="font-bold text-emerald-800">🥗 Almoço</div><input type="time" name="almoco_horario" class="bg-white border border-slate-300 rounded px-2 py-1 text-sm"></div>
+                    <div class="space-y-2">
+                        <div class="flex gap-2"><input type="text" name="almoco_alimento_1" class="w-2/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: Arroz branco"><input type="text" name="almoco_qtd_1" class="w-1/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: 2 colheres de sopa"></div>
+                        <div class="flex gap-2"><input type="text" name="almoco_alimento_2" class="w-2/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: Feijão carioca"><input type="text" name="almoco_qtd_2" class="w-1/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: 1 concha média"></div>
+                        <div class="flex gap-2"><input type="text" name="almoco_alimento_3" class="w-2/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: Frango grelhado"><input type="text" name="almoco_qtd_3" class="w-1/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: 1 filé médio"></div>
+                        <div class="flex gap-2"><input type="text" name="almoco_alimento_4" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="almoco_qtd_4" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="almoco_alimento_5" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="almoco_qtd_5" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="almoco_alimento_6" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="almoco_qtd_6" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="almoco_alimento_7" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="almoco_qtd_7" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                    </div>
+                </div>
+
+                <!-- Lanche da Tarde (5 Linhas) -->
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                    <div class="flex justify-between items-center mb-2"><div class="font-bold text-emerald-800">🥪 Lanche da Tarde</div><input type="time" name="lanche_tarde_horario" class="bg-white border border-slate-300 rounded px-2 py-1 text-sm"></div>
+                    <div class="space-y-2">
+                        <div class="flex gap-2"><input type="text" name="lanche_alimento_1" class="w-2/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: Iogurte natural"><input type="text" name="lanche_qtd_1" class="w-1/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: 1 pote"></div>
+                        <div class="flex gap-2"><input type="text" name="lanche_alimento_2" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="lanche_qtd_2" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="lanche_alimento_3" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="lanche_qtd_3" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="lanche_alimento_4" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="lanche_qtd_4" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="lanche_alimento_5" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="lanche_qtd_5" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                    </div>
+                </div>
+
+                <!-- Jantar (7 Linhas) -->
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                    <div class="flex justify-between items-center mb-2"><div class="font-bold text-emerald-800">🍲 Jantar</div><input type="time" name="jantar_horario" class="bg-white border border-slate-300 rounded px-2 py-1 text-sm"></div>
+                    <div class="space-y-2">
+                        <div class="flex gap-2"><input type="text" name="jantar_alimento_1" class="w-2/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: Arroz branco"><input type="text" name="jantar_qtd_1" class="w-1/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: 2 colheres de sopa"></div>
+                        <div class="flex gap-2"><input type="text" name="jantar_alimento_2" class="w-2/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: Feijão carioca"><input type="text" name="jantar_qtd_2" class="w-1/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: 1 concha média"></div>
+                        <div class="flex gap-2"><input type="text" name="jantar_alimento_3" class="w-2/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: Frango grelhado"><input type="text" name="jantar_qtd_3" class="w-1/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: 1 filé médio"></div>
+                        <div class="flex gap-2"><input type="text" name="jantar_alimento_4" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="jantar_qtd_4" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="jantar_alimento_5" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="jantar_qtd_5" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="jantar_alimento_6" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="jantar_qtd_6" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="jantar_alimento_7" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="jantar_qtd_7" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                    </div>
+                </div>
+
+                <!-- Outras Refeições (Ceia, Pré/Pós) - 3 Linhas cada -->
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                    <div class="flex justify-between items-center mb-2"><div class="font-bold text-emerald-800">⚡ Pré-Treino <span class="text-xs font-normal text-slate-500">(Nutrição Esportiva)</span></div><input type="time" name="pre_treino_horario" class="bg-white border border-slate-300 rounded px-2 py-1 text-sm"></div>
+                    <div class="space-y-2">
+                        <div class="flex gap-2"><input type="text" name="pre_alimento_1" class="w-2/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: Banana prata"><input type="text" name="pre_qtd_1" class="w-1/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: 1 unidade"></div>
+                        <div class="flex gap-2"><input type="text" name="pre_alimento_2" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="pre_qtd_2" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="pre_alimento_3" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="pre_qtd_3" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                    </div>
+                </div>
+
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                    <div class="flex justify-between items-center mb-2"><div class="font-bold text-emerald-800">💪 Pós-Treino <span class="text-xs font-normal text-slate-500">(Nutrição Esportiva)</span></div><input type="time" name="pos_treino_horario" class="bg-white border border-slate-300 rounded px-2 py-1 text-sm"></div>
+                    <div class="space-y-2">
+                        <div class="flex gap-2"><input type="text" name="pos_alimento_1" class="w-2/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: Whey Protein"><input type="text" name="pos_qtd_1" class="w-1/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: 1 scoop"></div>
+                        <div class="flex gap-2"><input type="text" name="pos_alimento_2" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="pos_qtd_2" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="pos_alimento_3" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="pos_qtd_3" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                    </div>
+                </div>
+
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                    <div class="flex justify-between items-center mb-2"><div class="font-bold text-emerald-800">🌙 Ceia</div><input type="time" name="ceia_horario" class="bg-white border border-slate-300 rounded px-2 py-1 text-sm"></div>
+                    <div class="space-y-2">
+                        <div class="flex gap-2"><input type="text" name="ceia_alimento_1" class="w-2/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: Chá de camomila"><input type="text" name="ceia_qtd_1" class="w-1/3 p-2 border border-slate-300 rounded text-sm" placeholder="Ex: 1 xícara"></div>
+                        <div class="flex gap-2"><input type="text" name="ceia_alimento_2" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="ceia_qtd_2" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="ceia_alimento_3" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="ceia_qtd_3" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                    </div>
+                </div>
+
+                <!-- Outra Refeição -->
+                <div class="border border-slate-200 rounded-lg p-4 bg-slate-50">
+                    <div class="flex justify-between items-center mb-2"><input type="text" value="Outra Refeição" class="font-bold text-emerald-800 bg-transparent border-b border-dashed outline-none w-1/2"><input type="time" name="outra_refeicao_horario" class="bg-white border border-slate-300 rounded px-2 py-1 text-sm"></div>
+                    <div class="space-y-2">
+                        <div class="flex gap-2"><input type="text" name="outra_alimento_1" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="outra_qtd_1" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="outra_alimento_2" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="outra_qtd_2" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                        <div class="flex gap-2"><input type="text" name="outra_alimento_3" class="w-2/3 p-2 border border-slate-300 rounded text-sm"><input type="text" name="outra_qtd_3" class="w-1/3 p-2 border border-slate-300 rounded text-sm"></div>
+                    </div>
+                </div>
+
+                <!-- Finais de Semana -->
+                <div class="border border-emerald-200 rounded-lg p-4 bg-emerald-50">
+                    <div class="font-bold text-emerald-800 mb-2">🗓️ Finais de Semana</div>
+                    <p class="text-xs text-emerald-700 mb-2">Descreva resumidamente como sua alimentação muda no sábado e domingo.</p>
+                    <textarea name="finais_semana" class="w-full p-3 border border-emerald-300 rounded-lg text-sm outline-none focus:ring-1 focus:ring-emerald-500 h-24 resize-none bg-white"></textarea>
+                </div>
+                
+                <!-- Campo Livre Final -->
+                <div class="bg-slate-50 p-6 border-t border-slate-200 mt-6">
+                    <label class="block text-sm font-semibold text-slate-600 mb-2">Observações Adicionais</label>
+                    <p class="text-xs text-slate-500 mb-2">Existe algo mais que você acha importante me contar? (Hábitos, horários específicos, sentimentos em relação à comida, etc.)</p>
+                    <textarea name="observacoes_finais" class="w-full bg-white border border-slate-300 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-500 outline-none h-32 resize-none"></textarea>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Botões de Ação -->
+        <div class="no-print flex flex-col md:flex-row justify-center items-center gap-4 pt-8">
+            <!-- Botão Enviar para E-mail -->
+            <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-10 rounded-full shadow-xl transform transition hover:-translate-y-1 flex items-center gap-2 cursor-pointer w-full md:w-auto justify-center">
+                <i class="fa-solid fa-paper-plane"></i> Enviar Ficha para o Nutricionista
+            </button>
+            
+            <!-- Botão Salvar PDF -->
+            <button type="button" onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white font-bold py-4 px-10 rounded-full shadow-xl transform transition hover:-translate-y-1 flex items-center gap-2 cursor-pointer w-full md:w-auto justify-center">
+                <i class="fa-solid fa-print"></i> Salvar PDF e instruir (enviar arquivo.pdf por whatsapp ou email)
+            </button>
         </div>
-        <div id="pdf-content"></div>
-    </div>
+
+    </form>
 
     <script>
-        // --- FUNÇÕES AUXILIARES ---
         function calcularIdade() {
-            const n = document.getElementById('dataNascimento').value;
-            if(n) {
-                const d = new Date(n), h = new Date();
-                let age = h.getFullYear() - d.getFullYear();
-                if(h.getMonth() < d.getMonth() || (h.getMonth()===d.getMonth() && h.getDate()<d.getDate())) age--;
-                document.getElementById('idadeOutput').value = age + ' anos';
+            const dataNascInput = document.getElementById('dataNascimento').value;
+            if (dataNascInput) {
+                const hoje = new Date();
+                const nasc = new Date(dataNascInput);
+                let idade = hoje.getFullYear() - nasc.getFullYear();
+                const m = hoje.getMonth() - nasc.getMonth();
+                if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) {
+                    idade--;
+                }
+                document.getElementById('idadeOutput').value = idade + ' anos';
+                // Recalcula o IMC caso a idade mude (para ajustar classificação de idoso)
+                calcularIMC();
+            } else {
+                document.getElementById('idadeOutput').value = '';
             }
         }
-        function formatarAltura(e){ e.value = e.value.replace(/\D/g,"").replace(/^(\d)(\d)/,"$1,$2"); }
-        function calcularIMC(){
-            const p = parseFloat(document.getElementById('peso').value);
-            const a = parseFloat(document.getElementById('altura').value.replace(',','.'));
-            if(p && a) {
-                const imc = p/(a*a);
+
+        function formatarAltura(element) {
+            let valor = element.value.replace(/\D/g, "");
+            if (valor.length > 1) {
+                valor = valor.replace(/^(\d{1})(\d)/, "$1,$2");
+            }
+            element.value = valor;
+        }
+
+        function calcularIMC() {
+            const pesoRaw = document.getElementById('peso').value;
+            const alturaRaw = document.getElementById('altura').value;
+            const dataNascInput = document.getElementById('dataNascimento').value;
+
+            // Tratamento de vírgula e ponto
+            const peso = parseFloat(pesoRaw.replace(',', '.'));
+            const altura = parseFloat(alturaRaw.replace(',', '.'));
+
+            if (peso > 0 && altura > 0) {
+                const imc = peso / (altura * altura);
                 document.getElementById('imcOutput').value = imc.toFixed(2);
-                document.getElementById('imcClassificacao').value = imc<18.5?'Baixo':imc<24.9?'Normal':imc<29.9?'Sobrepeso':'Obesidade';
+                
+                let idade = 0;
+                if (dataNascInput) {
+                    const hoje = new Date();
+                    const nasc = new Date(dataNascInput);
+                    idade = hoje.getFullYear() - nasc.getFullYear();
+                    const m = hoje.getMonth() - nasc.getMonth();
+                    if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) {
+                        idade--;
+                    }
+                }
+
+                let classif = '';
+
+                // Classificação de Lipschitz para Idosos (>= 60 anos)
+                if (idade >= 60) {
+                    if (imc < 22) classif = 'Baixo peso (Idoso)';
+                    else if (imc < 27) classif = 'Eutrofia (Idoso)';
+                    else classif = 'Sobrepeso (Idoso)';
+                } else {
+                    // Classificação WHO para Adultos (< 60 anos)
+                    if (imc < 18.5) classif = 'Abaixo do peso';
+                    else if (imc < 24.9) classif = 'Peso normal';
+                    else if (imc < 29.9) classif = 'Sobrepeso';
+                    else if (imc < 34.9) classif = 'Obesidade I';
+                    else if (imc < 39.9) classif = 'Obesidade II';
+                    else classif = 'Obesidade III';
+                }
+                
+                document.getElementById('imcClassificacao').value = classif;
+            } else {
+                document.getElementById('imcOutput').value = '';
+                document.getElementById('imcClassificacao').value = '';
             }
         }
-        function verificarOutroGenero(e) { document.getElementById('genero_outro').style.display = e.value === 'Outro' ? 'block' : 'none'; }
-        function verificarOutroObjetivo(e) { document.getElementById('objetivo_outro').style.display = e.value === 'Outro' ? 'block' : 'none'; }
-        function atualizarAssuntoEmail() { document.getElementById('email_subject').value = "ANAMNESE - " + (document.getElementById('nome_paciente').value || "").toUpperCase(); }
-        
-        // Função toggleField com verificação de segurança (null check)
-        function toggleField(id, show) {
-            const el = document.getElementById(id);
-            if (!el) return; // Evita erro se o ID não existir
-            el.style.display = show ? 'block' : 'none';
-            el.classList.toggle('hidden', !show);
-            if(!show) el.value = '';
-        }
-        
-        function togglePesoDetails(show) { document.getElementById('peso_details').style.display = show ? 'flex' : 'none'; }
-        function toggleTabagismo(show) { toggleField('tabagismo_qtd', show); }
-        function toggleAlcool(show) { toggleField('alcool_detalhe', show); }
-        function toggleMenstrual(show) { toggleField('menstrual_quais', show); }
 
-        // --- LÓGICA DE GERAÇÃO DE PDF LIMPO ---
-        function gerarPDF() {
-            const nomePaciente = document.getElementById('nome_paciente').value || 'Paciente';
-            const contentDiv = document.getElementById('pdf-content');
-            contentDiv.innerHTML = ''; 
-            document.getElementById('pdf-data').innerText = new Date().toLocaleDateString();
-
-            // Varre as seções normais
-            document.querySelectorAll('section[data-pdf-title]').forEach(sec => {
-                const title = sec.getAttribute('data-pdf-title');
-                
-                // Pula Recordatório aqui (será tratado separadamente)
-                if(title === 'Recordatório Alimentar') return;
-
-                let html = `<div class="section-title">${title}</div>`;
-                let hasData = false;
-
-                // Inputs Normais
-                sec.querySelectorAll('input:not([type="radio"]):not([type="hidden"]):not([type="time"]), select, textarea').forEach(input => {
-                    if (input.value && input.style.display !== 'none' && !input.classList.contains('no-print')) {
-                        let label = "Campo";
-                        const lblTag = input.previousElementSibling;
-                        if(lblTag && lblTag.tagName === 'LABEL') label = lblTag.innerText;
-                        else if(input.parentElement.tagName === 'LABEL') label = input.parentElement.innerText;
-                        else if(input.parentElement.previousElementSibling?.tagName === 'LABEL') label = input.parentElement.previousElementSibling.innerText;
-                        
-                        const valClass = input.tagName === 'TEXTAREA' ? 'block' : 'row';
-                        const valHtml = input.tagName === 'TEXTAREA' 
-                            ? `<span class="block-label">${label}:</span> <span class="block-value">${input.value}</span>`
-                            : `<span class="label">${label}:</span> <span class="value">${input.value}</span>`;
-
-                        html += `<div class="${valClass}">${valHtml}</div>`;
-                        hasData = true;
-                    }
-                });
-
-                // Radios
-                sec.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
-                     let label = "Opção";
-                     let container = radio.closest('div').parentElement; 
-                     const labelGroup = container.querySelector('label:not(:has(input))'); 
-                     if(labelGroup) label = labelGroup.innerText;
-                     
-                     html += `<div class="row"><span class="label">${label}:</span> <span class="value">${radio.nextSibling.textContent.trim() || radio.value}</span></div>`;
-                     hasData = true;
-                });
-
-                if(hasData) contentDiv.innerHTML += html;
-            });
-
-            // 2. Varre Recordatório (Lógica de Tabela/Lista)
-            const recSection = document.querySelector('section[data-pdf-title="Recordatório Alimentar"]');
-            if (recSection) {
-                let html = `<div class="section-title">Recordatório Alimentar</div>`;
-                let hasData = false;
-
-                // Textareas soltos (Preferências, Rotina)
-                recSection.querySelectorAll('textarea').forEach(area => {
-                     if (area.value.trim()) {
-                        const label = area.previousElementSibling?.innerText || "Obs";
-                        // Pula se for dentro de um bloco de refeição (será pego depois)
-                        if(!area.closest('.border')) {
-                             html += `<div class="block"><span class="block-label">${label}:</span> <span class="block-value">${area.value}</span></div>`;
-                             hasData = true;
-                        }
-                     }
-                });
-
-                // Tabela de Refeições (Box)
-                const mealBlocks = recSection.querySelectorAll('.border.p-4');
-                mealBlocks.forEach(block => {
-                    let mealName = "";
-                    // Tenta achar o nome da refeição
-                    const titleEl = block.querySelector('span'); // Procura span no título
-                    const titleInput = block.querySelector('input[name*="titulo"]');
-                    if(titleEl) mealName = titleEl.innerText;
-                    else if(titleInput) mealName = titleInput.value;
-
-                    // Horário
-                    const timeInput = block.querySelector('input[type="time"]');
-                    const time = timeInput && timeInput.value ? `(${timeInput.value})` : "";
-                    
-                    // Itens preenchidos
-                    let items = [];
-                    const itemInputs = block.querySelectorAll('input[name*="_item_"]');
-                    itemInputs.forEach(input => {
-                        if(input.value.trim()) {
-                            const qtdInput = input.nextElementSibling; // input qtd é irmão
-                            const qtd = qtdInput ? qtdInput.value : "";
-                            items.push(`${input.value} ${qtd ? '- ' + qtd : ''}`);
-                        }
-                    });
-
-                    if(items.length > 0) {
-                        html += `<div class="block">
-                                    <span class="block-label" style="color:#000;">${mealName} ${time}</span>
-                                    <span class="block-value" style="margin-left:10px;">• ${items.join('<br>• ')}</span>
-                                 </div>`;
-                        hasData = true;
-                    }
-                });
-                
-                if(hasData) contentDiv.innerHTML += html;
+        function verificarOutroObjetivo(selectElement) {
+            var inputOutro = document.getElementById('objetivo_outro');
+            if (selectElement.value === 'Outro') {
+                inputOutro.classList.remove('hidden');
+                inputOutro.required = true;
+            } else {
+                inputOutro.classList.add('hidden');
+                inputOutro.required = false;
+                inputOutro.value = ''; // Limpa o campo se esconder
             }
+        }
 
-            // 3. Gera o PDF
-            const element = document.getElementById('pdf-template');
-            element.style.display = 'block'; 
-            const opt = {
-                margin: 10,
-                filename: `Anamnese_${nomePaciente}.pdf`,
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
-            html2pdf().set(opt).from(element).save().then(() => {
-                element.style.display = 'none'; 
-            });
+        function togglePesoDetails(show) {
+            const details = document.getElementById('peso_details');
+            if (show) {
+                details.classList.remove('hidden');
+            } else {
+                details.classList.add('hidden');
+                // Limpa os campos ao esconder
+                const inputs = details.querySelectorAll('input');
+                inputs.forEach(input => input.value = '');
+            }
         }
     </script>
 
