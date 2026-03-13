@@ -10,95 +10,106 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         
-        /* ESTILOS AVANÇADOS PARA IMPRESSÃO - CAMPOS MAIORES E LEGÍVEIS */
+        /* ESTILOS CORRIGIDOS PARA IMPRESSÃO - VERSÃO CELULAR */
         @media print {
             .no-print { display: none !important; }
-            body { 
-                background-color: white !important; 
-                -webkit-print-color-adjust: exact; 
+            
+            /* RESET COMPLETO PARA IMPRESSÃO */
+            body, html {
+                background-color: white !important;
                 color: black !important;
                 font-size: 12pt;
                 line-height: 1.4;
-            }
-            .shadow-lg, .shadow-md, .shadow-sm { box-shadow: none !important; border: 1px solid #ddd !important; }
-            
-            /* CAMPOS DE PREENCHIMENTO - AUMENTADOS E COM WRAP DE TEXTO */
-            input, textarea, select { 
-                border: 1px solid #000 !important; 
-                background: white !important; 
-                color: black !important; 
-                font-size: 11pt;
-                padding: 8px !important;
-                min-height: 35px;
-                word-wrap: break-word;
-                white-space: normal;
+                margin: 0;
+                padding: 0;
+                width: 100%;
+                height: auto;
                 overflow: visible;
             }
             
-            /* GARANTIR QUE TEXTOS LONGOS SEJAM VISÍVEIS */
+            /* GARANTIR QUE TODAS AS SEÇÕES APAREÇAM */
+            .section-hidden, .section-active {
+                display: block !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                position: relative !important;
+                left: 0 !important;
+                right: 0 !important;
+                top: 0 !important;
+                bottom: 0 !important;
+                transform: none !important;
+                page-break-inside: avoid;
+                background-color: white !important;
+                border: 1px solid #ccc !important;
+                margin-bottom: 15px !important;
+                padding: 10px !important;
+            }
+            
+            /* REMOVER SOMBRAS E EFEITOS */
+            .shadow-lg, .shadow-md, .shadow-sm { 
+                box-shadow: none !important; 
+                border: 1px solid #ddd !important; 
+            }
+            
+            /* CAMPOS DE PREENCHIMENTO - VISÍVEIS */
+            input, textarea, select, .bg-slate-50 input, .bg-slate-50 textarea, .bg-slate-50 select {
+                border: 1px solid #000 !important; 
+                background: white !important; 
+                color: black !important; 
+                font-size: 11pt !important;
+                padding: 8px !important;
+                min-height: 35px !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+                display: inline-block !important;
+                width: auto !important;
+                max-width: 100% !important;
+            }
+            
+            /* GARANTIR QUE TEXTOS LONGOS APAREÇAM */
             input[type="text"], input[type="tel"], input[type="number"], input[type="email"], textarea {
                 overflow: visible !important;
                 white-space: normal !important;
                 word-wrap: break-word !important;
                 height: auto !important;
-                min-height: 35px;
             }
             
-            /* AUMENTAR ESPAÇO PARA TEXTOS NO RECORDATÓRIO */
-            .recordatorio-cell input {
-                width: 100% !important;
-                min-width: 150px !important;
+            /* FUNDOS COLORIDOS - MANTIDOS COM SUTILEZA */
+            .bg-emerald-50 { background-color: #f0fdf4 !important; }
+            .bg-red-50 { background-color: #fef2f2 !important; }
+            .bg-amber-50 { background-color: #fffbeb !important; }
+            .bg-blue-50 { background-color: #eff6ff !important; }
+            .bg-slate-100 { background-color: #f1f5f9 !important; }
+            
+            /* TEXTOS COLORIDOS */
+            .text-emerald-800, .text-emerald-700, .text-emerald-600 { color: #047857 !important; }
+            .text-red-800, .text-red-700, .text-red-600 { color: #991b1b !important; }
+            .text-amber-800, .text-amber-700 { color: #92400e !important; }
+            .text-blue-800, .text-blue-700 { color: #1e40af !important; }
+            
+            /* BORDAS */
+            .border, .border-2 { border: 1px solid #000 !important; }
+            
+            /* CABEÇALHO */
+            .bg-slate-900 {
+                background-color: #1e293b !important;
+                color: white !important;
             }
             
-            .bg-slate-50, .bg-slate-100, .bg-slate-200, .bg-amber-50, .bg-blue-50 { 
-                background-color: white !important; 
-                color: black !important;
-            }
-            .print-break-inside { break-inside: avoid; }
-            input[readonly] { 
-                background-color: #f9f9f9 !important; 
-                color: black !important; 
-                border-color: #aaa !important; 
-            }
-            .text-slate-500, .text-slate-600, .text-slate-700 { color: black !important; }
-            .border-slate-200, .border-slate-300 { border-color: #000 !important; }
-            
-            /* GARANTIR VISIBILIDADE DE TODAS AS SEÇÕES */
-            .section-hidden, .section-active { display: block !important; }
-            
-            /* CORES MANTIDAS COM BOM CONTRASTE */
-            .text-emerald-400, .text-emerald-500, .text-emerald-600, .text-emerald-700 {
-                color: #047857 !important;
-            }
-            .bg-emerald-50 {
-                background-color: #f0fdf4 !important;
-                border-color: #bbf7d0 !important;
-            }
-            .text-red-600, .text-red-700 { color: #991b1b !important; }
-            .bg-red-50 {
-                background-color: #fef2f2 !important;
-                border-color: #fecaca !important;
-            }
-            .text-amber-600, .text-amber-700, .text-amber-800, .text-amber-900 {
-                color: #92400e !important;
-            }
-            .bg-amber-50 {
-                background-color: #fffbeb !important;
-                border-color: #fcd34d !important;
+            /* GRIDS E FLEX - MANTER ESTRUTURA */
+            .grid, .flex { 
+                display: flex !important; 
+                flex-wrap: wrap !important; 
+                gap: 10px !important; 
             }
             
-            /* CAMPOS DO RECORDATÓRIO COM MAIOR CAPACIDADE */
-            .grid-cols-2 > div > input, .flex.gap-2 > input {
-                width: 100% !important;
-                max-width: none !important;
+            /* EVITAR QUEBRAS NO MEIO DOS ELEMENTOS */
+            .print-break-inside, section, div {
+                page-break-inside: avoid;
             }
-            
-            /* QUEBRA DE PÁGINA INTELIGENTE */
-            h2, .font-bold { break-after: avoid; }
-            .border-t, .border-b { break-inside: avoid; }
         }
         
-        /* MELHORIAS VISUAIS PARA WEB */
+        /* ESTILOS NORMAIS (TELA) */
         .input-validado { border-color: #10b981 !important; background-color: #f0fdf4; }
         .input-invalido { border-color: #ef4444 !important; background-color: #fef2f2; }
         
@@ -122,50 +133,19 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* ESTILOS PARA CAMPOS MAIORES */
-        input[type="text"], input[type="tel"], input[type="number"], input[type="email"], input[type="time"], input[type="date"], select, textarea {
-            transition: all 0.2s;
-        }
-        input:focus, select:focus, textarea:focus {
-            ring: 2px solid #10b981;
-            border-color: #10b981;
-        }
-        
-        /* MELHORAR LEGIBILIDADE DOS CAMPOS DE RECORDATÓRIO */
-        .recordatorio-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .recordatorio-row {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-        .recordatorio-row input:first-child {
-            flex: 2;
-        }
-        .recordatorio-row input:last-child {
-            flex: 1;
-        }
-        
-        /* CAMPOS DE TEXTO MAIORES */
-        .campo-expansivel {
-            min-width: 0;
-            width: 100%;
-        }
-        
-        /* ESTILO PARA O TEXTO (NADA) */
-        .nada-placeholder {
-            color: #6b7280;
-            font-style: italic;
+        /* CAMPOS MAIORES PARA CELULAR */
+        @media (max-width: 768px) {
+            input, select, textarea {
+                font-size: 16px !important; /* Evita zoom automático no iOS */
+                padding: 12px !important;
+            }
         }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800" id="conteudo-da-ficha">
 
     <!-- Header Profissional -->
-    <div class="bg-slate-900 text-white py-10 px-6 mb-8 border-b-4 border-emerald-500">
+    <div class="bg-slate-900 text-white py-10 px-6 mb-8 border-b-4 border-emerald-500 no-print">
         <div class="max-w-6xl mx-auto flex flex-col items-center text-center gap-6">
             <h1 class="text-3xl md:text-5xl font-bold tracking-tight uppercase">
                 NUTRIÇÃO <span class="text-emerald-400">CLÍNICA E ESPORTIVA</span>
@@ -177,6 +157,13 @@
             </div>
             <p class="text-slate-500 text-xs uppercase tracking-wide mt-2">Ficha de Pré-Consulta & Anamnese</p>
         </div>
+    </div>
+
+    <!-- CABEÇALHO PARA IMPRESSÃO (só aparece no PDF) -->
+    <div class="print-only" style="display: none; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #047857; padding-bottom: 10px;">
+        <h1 style="font-size: 24px; font-weight: bold; color: #047857;">NUTRIÇÃO CLÍNICA E ESPORTIVA</h1>
+        <h2 style="font-size: 18px;">Leandro Alves - Nutricionista CRN2 20221</h2>
+        <p style="font-size: 14px;">FICHA DE PRÉ-CONSULTA & ANAMNESE</p>
     </div>
 
     <!-- Barra de Progresso Aprimorada -->
@@ -290,7 +277,7 @@
                     </div>
                 </div>
                 
-                <!-- Medidas Antropométricas Adicionais - CAMPOS MAIORES -->
+                <!-- Medidas Antropométricas Adicionais -->
                 <div class="md:col-span-4 pt-4 mt-2 border-t border-slate-100">
                     <h3 class="font-bold text-slate-700 mb-3 text-sm uppercase tracking-wide">Medidas Antropométricas (Opcionais)</h3>
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -379,7 +366,7 @@
             </div>
         </section>
 
-        <!-- 3. ROTINA DE TREINO (NUTRIÇÃO ESPORTIVA) - ATUALIZADO COM NÍVEL DE ATIVIDADE FÍSICA OMS 1985 -->
+        <!-- 3. ROTINA DE TREINO (NUTRIÇÃO ESPORTIVA) -->
         <section class="section-hidden bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden print-break-inside" id="section-3">
             <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
                 <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</div>
@@ -398,7 +385,7 @@
                     </div>
                 </div>
 
-                <!-- NÍVEL DE ATIVIDADE FÍSICA - OMS 1985 (NOVO) -->
+                <!-- NÍVEL DE ATIVIDADE FÍSICA - OMS 1985 -->
                 <div class="bg-blue-50 p-5 rounded-lg border-2 border-blue-200">
                     <label class="block text-sm font-semibold text-blue-800 mb-3 flex items-center gap-2">
                         <i class="fas fa-activity text-blue-600"></i> Nível de Atividade Física (OMS, 1985)
@@ -415,7 +402,7 @@
                     </p>
                 </div>
                 
-                <!-- SEGUNDA ATIVIDADE (NOVO CAMPO) -->
+                <!-- SEGUNDA ATIVIDADE -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
                     <div>
                         <label class="block text-sm font-semibold text-slate-600 mb-1">Segunda Atividade (se houver)</label>
@@ -439,7 +426,7 @@
                     <input type="text" name="tempo_de_treino" oninput="validarCampo(this)" class="w-full md:w-64 bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3 focus:ring-2 focus:ring-emerald-500 outline-none" placeholder="Ex: 6 meses, 3 anos...">
                 </div>
 
-                <!-- SEMANA DE TREINOS - CAMPOS AMPLIADOS -->
+                <!-- SEMANA DE TREINOS -->
                 <div class="bg-slate-50 p-5 rounded-lg border-2 border-slate-200">
                     <label class="block text-sm font-semibold text-slate-600 mb-3">📅 Semana de Treinos</label>
                     <p class="text-xs text-slate-500 mb-4">Descreva o treino de cada dia (Ex: Pernas, Costas, Cardio, Descanso). Essencial para periodização.</p>
@@ -470,7 +457,7 @@
                     </div>
                 </div>
 
-                <!-- PERCEPÇÃO DE ESFORÇO (NOVO) -->
+                <!-- PERCEPÇÃO DE ESFORÇO -->
                 <div>
                     <label class="block text-sm font-semibold text-slate-600 mb-1">Percepção Subjetiva de Esforço (PSE 0-10)</label>
                     <select name="pse_treino" class="w-full md:w-64 bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3">
@@ -862,7 +849,7 @@
                 <h2 class="font-bold text-slate-700 text-lg">Recordatório Alimentar</h2>
             </div>
             
-            <!-- TEXTO COMPLETO E EXPLICATIVO - REFORMULADO -->
+            <!-- TEXTO COMPLETO E EXPLICATIVO -->
             <div class="bg-amber-50 p-6 border-b border-amber-200">
                 <div class="flex items-start gap-4">
                     <div class="bg-amber-100 p-3 rounded-full">
@@ -1464,7 +1451,7 @@
             document.getElementById('resumo-condicoes').textContent = condicoes.length > 0 ? condicoes.join(', ') : 'Nenhuma condição prioritária';
         }
         
-        // ========== FUNÇÃO DE IMPRESSÃO ==========
+        // ========== FUNÇÃO DE IMPRESSÃO CORRIGIDA ==========
         function imprimirFormulario() {
             const consentimento = document.querySelector('input[name="consentimento"]');
             if (!consentimento.checked) {
@@ -1473,30 +1460,45 @@
                 return;
             }
             
-            // Mostrar todas as seções para impressão
+            // Salvar estado atual
+            const secoesVisiveis = [];
             for (let i = 1; i <= totalSections; i++) {
                 const section = document.getElementById(`section-${i}`);
-                if (section) {
-                    section.classList.remove('section-hidden');
-                    section.classList.add('section-active');
+                if (section.classList.contains('section-active')) {
+                    secoesVisiveis.push(i);
                 }
             }
             
-            // Aguardar um momento para o DOM atualizar e chamar impressão
+            // Mostrar TODAS as seções para impressão (resolvendo o problema do PDF em branco)
+            for (let i = 1; i <= totalSections; i++) {
+                const section = document.getElementById(`section-${i}`);
+                section.classList.remove('section-hidden');
+                section.classList.add('section-active');
+                // Garantir que o conteúdo seja visível
+                section.style.display = 'block';
+            }
+            
+            // Aguardar um momento para o DOM atualizar
             setTimeout(() => {
                 window.print();
                 
-                // Restaurar estado original
+                // Restaurar estado original após impressão
                 for (let i = 1; i <= totalSections; i++) {
-                    if (i !== currentSection) {
-                        document.getElementById(`section-${i}`).classList.add('section-hidden');
-                        document.getElementById(`section-${i}`).classList.remove('section-active');
+                    const section = document.getElementById(`section-${i}`);
+                    if (!secoesVisiveis.includes(i)) {
+                        section.classList.add('section-hidden');
+                        section.classList.remove('section-active');
+                        section.style.display = '';
+                    } else {
+                        section.style.display = '';
                     }
                 }
-                document.getElementById(`section-${currentSection}`).classList.add('section-active');
-            }, 100);
+            }, 200);
             
-            alert('Use a opção "Salvar como PDF" na janela de impressão. Em seguida, envie o arquivo para nutrilealves@gmail.com junto com seus exames.');
+            // Mensagem de instrução
+            setTimeout(() => {
+                alert('✅ Após imprimir/salvar o PDF, envie o arquivo para nutrilealves@gmail.com junto com seus exames.');
+            }, 500);
         }
         
         // Inicialização
