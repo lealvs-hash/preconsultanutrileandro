@@ -10,106 +10,41 @@
     <style>
         body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
         
-        /* ESTILOS CORRIGIDOS PARA IMPRESSÃO - VERSÃO CELULAR */
+        /* ESTILOS DE IMPRESSÃO OTIMIZADOS */
         @media print {
             .no-print { display: none !important; }
-            
-            /* RESET COMPLETO PARA IMPRESSÃO */
-            body, html {
-                background-color: white !important;
+            body { 
+                background: white !important; 
                 color: black !important;
                 font-size: 12pt;
-                line-height: 1.4;
-                margin: 0;
-                padding: 0;
-                width: 100%;
-                height: auto;
-                overflow: visible;
+                padding: 15px;
             }
             
-            /* GARANTIR QUE TODAS AS SEÇÕES APAREÇAM */
+            /* FORÇAR TODAS AS SEÇÕES A APARECEREM */
             .section-hidden, .section-active {
                 display: block !important;
                 opacity: 1 !important;
                 visibility: visible !important;
-                position: relative !important;
-                left: 0 !important;
-                right: 0 !important;
-                top: 0 !important;
-                bottom: 0 !important;
-                transform: none !important;
                 page-break-inside: avoid;
-                background-color: white !important;
                 border: 1px solid #ccc !important;
-                margin-bottom: 15px !important;
-                padding: 10px !important;
+                margin-bottom: 20px !important;
+                background: white !important;
             }
             
-            /* REMOVER SOMBRAS E EFEITOS */
-            .shadow-lg, .shadow-md, .shadow-sm { 
-                box-shadow: none !important; 
-                border: 1px solid #ddd !important; 
-            }
-            
-            /* CAMPOS DE PREENCHIMENTO - VISÍVEIS */
-            input, textarea, select, .bg-slate-50 input, .bg-slate-50 textarea, .bg-slate-50 select {
-                border: 1px solid #000 !important; 
-                background: white !important; 
-                color: black !important; 
-                font-size: 11pt !important;
+            input, textarea, select {
+                border: 1px solid #000 !important;
+                background: white !important;
+                color: black !important;
                 padding: 8px !important;
-                min-height: 35px !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                display: inline-block !important;
-                width: auto !important;
-                max-width: 100% !important;
             }
             
-            /* GARANTIR QUE TEXTOS LONGOS APAREÇAM */
-            input[type="text"], input[type="tel"], input[type="number"], input[type="email"], textarea {
-                overflow: visible !important;
-                white-space: normal !important;
-                word-wrap: break-word !important;
-                height: auto !important;
-            }
-            
-            /* FUNDOS COLORIDOS - MANTIDOS COM SUTILEZA */
-            .bg-emerald-50 { background-color: #f0fdf4 !important; }
-            .bg-red-50 { background-color: #fef2f2 !important; }
-            .bg-amber-50 { background-color: #fffbeb !important; }
-            .bg-blue-50 { background-color: #eff6ff !important; }
             .bg-slate-100 { background-color: #f1f5f9 !important; }
-            
-            /* TEXTOS COLORIDOS */
-            .text-emerald-800, .text-emerald-700, .text-emerald-600 { color: #047857 !important; }
-            .text-red-800, .text-red-700, .text-red-600 { color: #991b1b !important; }
-            .text-amber-800, .text-amber-700 { color: #92400e !important; }
-            .text-blue-800, .text-blue-700 { color: #1e40af !important; }
-            
-            /* BORDAS */
-            .border, .border-2 { border: 1px solid #000 !important; }
-            
-            /* CABEÇALHO */
-            .bg-slate-900 {
-                background-color: #1e293b !important;
-                color: white !important;
-            }
-            
-            /* GRIDS E FLEX - MANTER ESTRUTURA */
-            .grid, .flex { 
-                display: flex !important; 
-                flex-wrap: wrap !important; 
-                gap: 10px !important; 
-            }
-            
-            /* EVITAR QUEBRAS NO MEIO DOS ELEMENTOS */
-            .print-break-inside, section, div {
-                page-break-inside: avoid;
-            }
+            .bg-emerald-50 { background-color: #f0fdf4 !important; }
+            .bg-amber-50 { background-color: #fffbeb !important; }
+            .bg-red-50 { background-color: #fef2f2 !important; }
+            .bg-blue-50 { background-color: #eff6ff !important; }
         }
         
-        /* ESTILOS NORMAIS (TELA) */
         .input-validado { border-color: #10b981 !important; background-color: #f0fdf4; }
         .input-invalido { border-color: #ef4444 !important; background-color: #fef2f2; }
         
@@ -133,16 +68,15 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* CAMPOS MAIORES PARA CELULAR */
         @media (max-width: 768px) {
             input, select, textarea {
-                font-size: 16px !important; /* Evita zoom automático no iOS */
+                font-size: 16px !important;
                 padding: 12px !important;
             }
         }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800" id="conteudo-da-ficha">
+<body class="bg-slate-50 text-slate-800">
 
     <!-- Header Profissional -->
     <div class="bg-slate-900 text-white py-10 px-6 mb-8 border-b-4 border-emerald-500 no-print">
@@ -159,14 +93,7 @@
         </div>
     </div>
 
-    <!-- CABEÇALHO PARA IMPRESSÃO (só aparece no PDF) -->
-    <div class="print-only" style="display: none; text-align: center; margin-bottom: 20px; border-bottom: 2px solid #047857; padding-bottom: 10px;">
-        <h1 style="font-size: 24px; font-weight: bold; color: #047857;">NUTRIÇÃO CLÍNICA E ESPORTIVA</h1>
-        <h2 style="font-size: 18px;">Leandro Alves - Nutricionista CRN2 20221</h2>
-        <p style="font-size: 14px;">FICHA DE PRÉ-CONSULTA & ANAMNESE</p>
-    </div>
-
-    <!-- Barra de Progresso Aprimorada -->
+    <!-- Barra de Progresso -->
     <div class="max-w-6xl mx-auto px-6 mb-6 no-print">
         <div class="bg-white p-5 rounded-xl shadow-sm border border-slate-200">
             <div class="flex justify-between items-center mb-2">
@@ -188,7 +115,7 @@
         </div>
     </div>
 
-    <!-- Instruções Iniciais Aprimoradas -->
+    <!-- Instruções Iniciais -->
     <div class="max-w-6xl mx-auto px-6 mb-8 no-print">
         <div class="bg-gradient-to-r from-emerald-50 to-green-50 p-6 rounded-xl border border-emerald-200 shadow-sm">
             <h3 class="font-bold text-emerald-800 mb-3 flex items-center gap-2 text-lg">
@@ -207,7 +134,6 @@
     </div>
 
     <form action="https://formspree.io/f/mjkdbala" method="POST" class="max-w-6xl mx-auto px-6 pb-20 space-y-8" id="form-anamnese">
-        
         <input type="hidden" name="_subject" id="email_subject" value="Nova Anamnese Recebida">
 
         <!-- 1. DADOS PESSOAIS -->
@@ -334,7 +260,7 @@
 
         <!-- 2. OBJETIVOS -->
         <section class="section-hidden bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden print-break-inside" id="section-2">
-             <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
+            <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
                 <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">2</div>
                 <h2 class="font-bold text-slate-700 text-lg">Objetivos e Expectativas</h2>
             </div>
@@ -366,14 +292,14 @@
             </div>
         </section>
 
-        <!-- 3. ROTINA DE TREINO (NUTRIÇÃO ESPORTIVA) -->
+        <!-- 3. ROTINA DE TREINO (NUTRIÇÃO ESPORTIVA) - COMPLETA -->
         <section class="section-hidden bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden print-break-inside" id="section-3">
             <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
                 <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">3</div>
                 <h2 class="font-bold text-slate-700 text-lg">Rotina de Treino (Nutrição Esportiva)</h2>
             </div>
             <div class="p-6 space-y-6">
-                <!-- ATIVIDADE PRINCIPAL E NÍVEL OMS -->
+                <!-- ATIVIDADE PRINCIPAL -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-semibold text-slate-600 mb-1">Modalidade Principal</label>
@@ -478,9 +404,9 @@
             </div>
         </section>
 
-        <!-- 4. SAÚDE E METABOLISMO -->
+        <!-- 4. SAÚDE E METABOLISMO - COMPLETA -->
         <section class="section-hidden bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden print-break-inside" id="section-4">
-             <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
+            <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
                 <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">4</div>
                 <h2 class="font-bold text-slate-700 text-lg">Saúde e Metabolismo</h2>
             </div>
@@ -507,27 +433,27 @@
                     </div>
                 </div>
                  
-                 <!-- ENVIO DE EXAMES -->
-                 <div class="bg-emerald-50 p-4 rounded-lg border-2 border-emerald-200 flex items-start gap-3">
+                <!-- ENVIO DE EXAMES -->
+                <div class="bg-emerald-50 p-4 rounded-lg border-2 border-emerald-200 flex items-start gap-3">
                     <i class="fa-brands fa-whatsapp text-emerald-600 text-xl mt-1"></i>
                     <div>
                         <h4 class="font-bold text-emerald-800 text-sm">📎 Envio de Exames</h4>
                         <p class="text-sm text-emerald-700">Envie fotos/PDF dos exames pelo WhatsApp ou E-mail: <span class="font-bold select-all bg-white px-2 py-1 rounded">nutrilealves@gmail.com</span></p>
                     </div>
-                 </div>
+                </div>
                  
-                 <!-- HISTÓRICO FAMILIAR -->
-                 <div>
+                <!-- HISTÓRICO FAMILIAR -->
+                <div>
                     <label class="block text-sm font-semibold text-slate-600 mb-2">Histórico de Doenças na Família</label>
                     <div class="flex gap-4 items-center mb-2">
                         <label class="flex items-center gap-2 text-sm"><input type="radio" name="historico_familia" value="Não" class="text-emerald-500" onclick="toggleHistoricoFamilia(false)" checked> Não</label>
                         <label class="flex items-center gap-2 text-sm"><input type="radio" name="historico_familia" value="Sim" class="text-emerald-500" onclick="toggleHistoricoFamilia(true)"> Sim</label>
                     </div>
                     <input type="text" id="historico_familia_quais" name="historico_familia_quais" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3 text-sm hidden" placeholder="Quais doenças? (Ex: diabetes, hipertensão, câncer...)">
-                 </div>
+                </div>
 
-                 <!-- HÁBITOS ALIMENTARES -->
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- HÁBITOS ALIMENTARES -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-semibold text-slate-600 mb-1">Horário de maior fome</label>
                         <select name="horario_fome" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3">
@@ -571,10 +497,10 @@
                             <option>Varia conforme a refeição</option>
                         </select>
                     </div>
-                 </div>
+                </div>
                  
-                 <!-- TABAGISMO, ÁLCOOL, SONO -->
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- TABAGISMO, ÁLCOOL, SONO -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-semibold text-slate-600 mb-2">Tabagismo</label>
                         <div class="flex gap-4 items-center mb-2">
@@ -618,10 +544,10 @@
                             <option>Muito Alto (9-10)</option>
                         </select>
                     </div>
-                 </div>
+                </div>
                  
-                 <!-- SAÚDE DA MULHER -->
-                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- SAÚDE DA MULHER -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label class="block text-sm font-semibold text-slate-600 mb-2">Distúrbios Menstruais</label>
                         <div class="flex gap-4 items-center mb-2">
@@ -637,10 +563,10 @@
                             <label class="flex items-center gap-2 text-sm"><input type="radio" name="uso_anticoncepcional" value="Sim" class="text-emerald-500"> Sim</label>
                         </div>
                     </div>
-                 </div>
+                </div>
 
-                 <!-- COMORBIDADES E SINTOMAS -->
-                 <div class="grid grid-cols-1 gap-6">
+                <!-- COMORBIDADES E SINTOMAS -->
+                <div class="grid grid-cols-1 gap-6">
                     <div><label class="block text-sm font-semibold text-slate-600 mb-1">Comorbidades e alergias alimentares</label><input type="text" name="25_Comorbidades" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3" placeholder="Ex: diabetes, hipertensão, intolerância à lactose..."></div>
                     <div><label class="block text-sm font-semibold text-slate-600 mb-1">Outros Diagnósticos</label><input type="text" name="26_Outros_Diagnosticos" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3" placeholder="Ex: Gastrite, Lesão no joelho..."></div>
                     
@@ -656,10 +582,10 @@
                             <label class="flex items-center gap-2"><input type="checkbox" name="sintoma_nenhum" class="text-emerald-500 rounded"> Nenhum</label>
                         </div>
                     </div>
-                 </div>
+                </div>
 
-                 <!-- CONSUMO DE AÇÚCAR, ÓLEO, SAL -->
-                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- CONSUMO DE AÇÚCAR, ÓLEO, SAL -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div>
                         <label class="block text-sm font-semibold text-slate-600 mb-2">Usa açúcar ou adoçante?</label>
                         <div class="flex gap-4 items-center mb-2">
@@ -692,19 +618,19 @@
                             <option>5 kgs ou mais</option>
                         </select>
                     </div>
-                 </div>
+                </div>
 
-                 <!-- MEDICAMENTOS E SUPLEMENTOS -->
-                 <div class="grid grid-cols-1 gap-6">
+                <!-- MEDICAMENTOS E SUPLEMENTOS -->
+                <div class="grid grid-cols-1 gap-6">
                     <div><label class="block text-sm font-semibold text-slate-600 mb-1">Medicamentos em uso</label><textarea name="27_Medicamentos" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3 h-24 resize-none" placeholder="Nome - Motivo - Dosagem (Ex: Losartana - Pressão - 50mg)"></textarea></div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div><label class="block text-sm font-semibold text-slate-600 mb-1">Suplementos Atuais</label><input type="text" name="28_Suplementos" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3" placeholder="Ex: Whey, Creatina..."></div>
                         <div><label class="block text-sm font-semibold text-slate-600 mb-1">Objetivo com os Suplementos</label><input type="text" name="29_Objetivo_Suplementos" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3" placeholder="Ex: Ganho de massa/força..."></div>
                     </div>
-                 </div>
+                </div>
 
-                 <!-- FREQUÊNCIA INTESTINAL E HIDRATAÇÃO -->
-                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-100">
+                <!-- FREQUÊNCIA INTESTINAL E HIDRATAÇÃO -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4 border-t border-slate-100">
                     <div>
                         <label class="block text-sm font-semibold text-slate-600 mb-1">Frequência Intestinal</label>
                         <select name="30_Freq_Intestino" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3">
@@ -761,14 +687,14 @@
             </div>
         </section>
 
-        <!-- 5. COMPORTAMENTO ALIMENTAR -->
+        <!-- 5. COMPORTAMENTO ALIMENTAR - COMPLETA -->
         <section class="section-hidden bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden print-break-inside" id="section-5">
-             <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
+            <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
                 <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">5</div>
                 <h2 class="font-bold text-slate-700 text-lg">Comportamento Alimentar e Rotina</h2>
             </div>
             <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-                 <div>
+                <div>
                     <label class="block text-sm font-semibold text-slate-600 mb-1">Quem prepara suas refeições?</label>
                     <select name="quem_cozinha" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3">
                         <option value="" disabled selected>Selecione...</option>
@@ -778,7 +704,7 @@
                         <option>Misto (Eu e outros)</option>
                     </select>
                 </div>
-                 <div>
+                <div>
                     <label class="block text-sm font-semibold text-slate-600 mb-1">Velocidade da Mastigação</label>
                     <select name="mastigacao" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3">
                         <option value="" disabled selected>Selecione...</option>
@@ -788,15 +714,15 @@
                     </select>
                 </div>
                 <div>
-                     <label class="block text-sm font-semibold text-slate-600 mb-1">Orçamento para Dieta</label>
-                     <select name="orcamento" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3">
+                    <label class="block text-sm font-semibold text-slate-600 mb-1">Orçamento para Dieta</label>
+                    <select name="orcamento" class="w-full bg-slate-50 border-2 border-slate-200 rounded-lg px-4 py-3">
                         <option value="" disabled selected>Selecione...</option>
                         <option>Econômico</option>
                         <option>Médio</option>
                         <option>Flexível</option>
                     </select>
                 </div>
-                 
+                
                 <!-- Histórico de Dietas -->
                 <div class="md:col-span-2">
                     <label class="block text-sm font-semibold text-slate-600 mb-2">Histórico de Dietas Anteriores</label>
@@ -842,14 +768,14 @@
             </div>
         </section>
 
-        <!-- 6. RECORDATÓRIO ALIMENTAR - COM TEXTO EXPLICATIVO MELHORADO -->
+        <!-- 6. RECORDATÓRIO ALIMENTAR - COMPLETA -->
         <section class="section-hidden bg-white rounded-xl shadow-md border border-slate-200 overflow-hidden print-break-inside" id="section-6">
             <div class="bg-slate-100 px-6 py-4 border-b border-slate-200 flex items-center gap-3">
                 <div class="bg-emerald-600 text-white w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">6</div>
                 <h2 class="font-bold text-slate-700 text-lg">Recordatório Alimentar</h2>
             </div>
             
-            <!-- TEXTO COMPLETO E EXPLICATIVO -->
+            <!-- TEXTO EXPLICATIVO MELHORADO -->
             <div class="bg-amber-50 p-6 border-b border-amber-200">
                 <div class="flex items-start gap-4">
                     <div class="bg-amber-100 p-3 rounded-full">
@@ -1127,28 +1053,20 @@
     </form>
 
     <script>
-        // ========== CONFIGURAÇÃO INICIAL ==========
+        // ========== CONFIGURAÇÃO ==========
         let currentSection = 1;
         const totalSections = 7;
         
-        // ========== FUNÇÕES DE NAVEGAÇÃO ==========
         function navNext() {
             if (currentSection < totalSections) {
-                if (validarSecaoAtual()) {
-                    document.getElementById(`section-${currentSection}`).classList.remove('section-active');
-                    document.getElementById(`section-${currentSection}`).classList.add('section-hidden');
-                    currentSection++;
-                    document.getElementById(`section-${currentSection}`).classList.remove('section-hidden');
-                    document.getElementById(`section-${currentSection}`).classList.add('section-active');
-                    document.getElementById(`section-${currentSection}`).classList.add('fade-in');
-                    updateProgress();
-                    
-                    document.getElementById(`section-${currentSection}`).scrollIntoView({behavior: 'smooth', block: 'start'});
-                    
-                    if (currentSection === totalSections) {
-                        atualizarResumo();
-                    }
-                }
+                document.getElementById(`section-${currentSection}`).classList.remove('section-active');
+                document.getElementById(`section-${currentSection}`).classList.add('section-hidden');
+                currentSection++;
+                document.getElementById(`section-${currentSection}`).classList.remove('section-hidden');
+                document.getElementById(`section-${currentSection}`).classList.add('section-active');
+                document.getElementById(`section-${currentSection}`).classList.add('fade-in');
+                updateProgress();
+                if (currentSection === totalSections) atualizarResumo();
             }
         }
         
@@ -1161,306 +1079,137 @@
                 document.getElementById(`section-${currentSection}`).classList.add('section-active');
                 document.getElementById(`section-${currentSection}`).classList.add('fade-in');
                 updateProgress();
-                
-                document.getElementById(`section-${currentSection}`).scrollIntoView({behavior: 'smooth', block: 'start'});
             }
         }
         
         function updateProgress() {
             const progress = (currentSection / totalSections) * 100;
-            document.getElementById('progress-bar').style.width = `${progress}%`;
-            document.getElementById('progress-text').textContent = `Etapa ${currentSection} de ${totalSections}`;
-            document.getElementById('progress-percent').textContent = `${Math.round(progress)}%`;
-            
-            const dots = document.querySelectorAll('.progress-dot');
-            dots.forEach((dot, index) => {
-                if (index < currentSection) {
-                    dot.className = 'progress-dot dot-completo';
-                } else if (index === currentSection - 1) {
-                    dot.className = 'progress-dot dot-atual';
-                } else {
-                    dot.className = 'progress-dot dot-pendente';
-                }
-            });
+            document.getElementById('progress-bar').style.width = progress + '%';
+            document.getElementById('progress-text').innerText = `Etapa ${currentSection} de ${totalSections}`;
+            document.getElementById('progress-percent').innerText = Math.round(progress) + '%';
         }
         
-        function validarSecaoAtual() {
-            const currentSectionEl = document.getElementById(`section-${currentSection}`);
-            const requiredFields = currentSectionEl.querySelectorAll('[required]');
-            let isValid = true;
-            
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    field.classList.add('input-invalido');
-                    isValid = false;
-                    field.scrollIntoView({behavior: 'smooth', block: 'center'});
-                    field.focus();
-                } else {
-                    field.classList.remove('input-invalido');
-                    field.classList.add('input-validado');
-                }
-            });
-            
-            if (!isValid) {
-                alert('Por favor, preencha todos os campos obrigatórios antes de continuar.');
-            }
-            
-            return isValid;
-        }
-        
-        // ========== FUNÇÕES DE CÁLCULO E FORMATAÇÃO ==========
+        // FUNÇÕES DE CÁLCULO
         function calcularIdade() {
-            const dataNascInput = document.getElementById('dataNascimento').value;
-            if (dataNascInput) {
+            const data = document.getElementById('dataNascimento').value;
+            if (data) {
                 const hoje = new Date();
-                const nasc = new Date(dataNascInput);
+                const nasc = new Date(data);
                 let idade = hoje.getFullYear() - nasc.getFullYear();
                 const m = hoje.getMonth() - nasc.getMonth();
-                if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) {
-                    idade--;
-                }
+                if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
                 document.getElementById('idadeOutput').value = idade + ' anos';
                 calcularIMC();
             }
         }
         
-        function formatarAltura(element) {
-            let valor = element.value.replace(/\D/g, "");
-            if (valor.length > 1) {
-                valor = valor.replace(/^(\d{1})(\d)/, "$1,$2");
-            }
-            element.value = valor;
+        function formatarAltura(input) {
+            let valor = input.value.replace(/\D/g, "");
+            if (valor.length > 1) valor = valor.replace(/^(\d{1})(\d)/, "$1,$2");
+            input.value = valor;
         }
         
         function calcularIMC() {
-            const pesoRaw = document.getElementById('peso').value;
-            const alturaRaw = document.getElementById('altura').value;
-            const dataNascInput = document.getElementById('dataNascimento').value;
-            const peso = parseFloat(pesoRaw.replace(',', '.'));
-            const altura = parseFloat(alturaRaw.replace(',', '.'));
-            
+            const peso = parseFloat(document.getElementById('peso')?.value || 0);
+            const altura = parseFloat(document.getElementById('altura')?.value.replace(',', '.') || 0);
             if (peso > 0 && altura > 0) {
                 const imc = peso / (altura * altura);
                 document.getElementById('imcOutput').value = imc.toFixed(2);
                 
-                let idade = 0;
-                if (dataNascInput) {
-                    const hoje = new Date();
-                    const nasc = new Date(dataNascInput);
-                    idade = hoje.getFullYear() - nasc.getFullYear();
-                    const m = hoje.getMonth() - nasc.getMonth();
-                    if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) {
-                        idade--;
-                    }
-                }
-                
                 let classif = '';
-                if (idade >= 60) {
-                    if (imc < 22) classif = 'Baixo peso (Idoso)';
-                    else if (imc < 27) classif = 'Eutrofia (Idoso)';
-                    else classif = 'Sobrepeso (Idoso)';
-                } else {
-                    if (imc < 18.5) classif = 'Abaixo do peso';
-                    else if (imc < 24.9) classif = 'Peso normal';
-                    else if (imc < 29.9) classif = 'Sobrepeso';
-                    else if (imc < 34.9) classif = 'Obesidade I';
-                    else if (imc < 39.9) classif = 'Obesidade II';
-                    else classif = 'Obesidade III';
-                }
+                if (imc < 18.5) classif = 'Abaixo do peso';
+                else if (imc < 25) classif = 'Peso normal';
+                else if (imc < 30) classif = 'Sobrepeso';
+                else if (imc < 35) classif = 'Obesidade I';
+                else if (imc < 40) classif = 'Obesidade II';
+                else classif = 'Obesidade III';
                 document.getElementById('imcClassificacao').value = classif;
             }
         }
         
         function calcularRCQ() {
-            const cintura = parseFloat(document.getElementById('cintura').value);
-            const quadril = parseFloat(document.getElementById('quadril').value);
-            const sexoBiologico = document.getElementById('sexo_biologico').value;
-            
-            if (cintura > 0 && quadril > 0 && sexoBiologico) {
+            const cintura = parseFloat(document.getElementById('cintura')?.value || 0);
+            const quadril = parseFloat(document.getElementById('quadril')?.value || 0);
+            const sexo = document.getElementById('sexo_biologico')?.value;
+            if (cintura && quadril && sexo) {
                 const rcq = cintura / quadril;
                 document.getElementById('rcqOutput').value = rcq.toFixed(2);
-                
-                let classificacao = '';
-                let cor = '';
-                
-                if (sexoBiologico === 'Masculino') {
-                    if (rcq < 0.90) { 
-                        classificacao = 'Baixo risco (OMS)'; 
-                        cor = 'text-green-600'; 
-                    } else if (rcq >= 0.90 && rcq <= 0.99) { 
-                        classificacao = 'Risco moderado (OMS)'; 
-                        cor = 'text-yellow-600'; 
-                    } else { 
-                        classificacao = 'Risco alto (OMS)'; 
-                        cor = 'text-red-600'; 
-                    }
-                } else if (sexoBiologico === 'Feminino') {
-                    if (rcq < 0.80) { 
-                        classificacao = 'Baixo risco (OMS)'; 
-                        cor = 'text-green-600'; 
-                    } else if (rcq >= 0.80 && rcq <= 0.84) { 
-                        classificacao = 'Risco moderado (OMS)'; 
-                        cor = 'text-yellow-600'; 
-                    } else { 
-                        classificacao = 'Risco alto (OMS)'; 
-                        cor = 'text-red-600'; 
-                    }
+                let classif = '', cor = '';
+                if (sexo === 'Masculino') {
+                    if (rcq < 0.90) { classif = 'Baixo risco'; cor = 'text-green-600'; }
+                    else if (rcq < 1.0) { classif = 'Risco moderado'; cor = 'text-yellow-600'; }
+                    else { classif = 'Risco alto'; cor = 'text-red-600'; }
+                } else {
+                    if (rcq < 0.80) { classif = 'Baixo risco'; cor = 'text-green-600'; }
+                    else if (rcq < 0.85) { classif = 'Risco moderado'; cor = 'text-yellow-600'; }
+                    else { classif = 'Risco alto'; cor = 'text-red-600'; }
                 }
-                
-                document.getElementById('rcqClassificacao').innerHTML = `<span class="${cor} font-bold">${classificacao}</span>`;
+                document.getElementById('rcqClassificacao').innerHTML = `<span class="${cor} font-bold">${classif}</span>`;
             }
         }
         
-        // ========== FUNÇÕES DE TOGGLE ==========
-        function verificarOutroObjetivo(selectElement) {
-            var inputOutro = document.getElementById('objetivo_outro');
-            if (selectElement.value === 'Outro') {
-                inputOutro.classList.remove('hidden');
-                inputOutro.required = true;
-            } else {
-                inputOutro.classList.add('hidden');
-                inputOutro.required = false;
-                inputOutro.value = '';
-            }
+        // FUNÇÕES DE TOGGLE
+        function verificarOutroObjetivo(select) {
+            document.getElementById('objetivo_outro').classList.toggle('hidden', select.value !== 'Outro');
         }
         
-        function verificarOutroGenero(selectElement) {
-            var inputOutro = document.getElementById('genero_outro');
-            if (selectElement.value === 'Outro') {
-                inputOutro.classList.remove('hidden');
-                inputOutro.required = true;
-            } else {
-                inputOutro.classList.add('hidden');
-                inputOutro.required = false;
-                inputOutro.value = '';
-            }
+        function verificarOutroGenero(select) {
+            document.getElementById('genero_outro').classList.toggle('hidden', select.value !== 'Outro');
         }
         
         function togglePesoDetails(show) {
-            const details = document.getElementById('peso_details');
-            if (show) {
-                details.classList.remove('hidden');
-            } else {
-                details.classList.add('hidden');
-                const inputs = details.querySelectorAll('input');
-                inputs.forEach(input => input.value = '');
-            }
+            document.getElementById('peso_details').classList.toggle('hidden', !show);
         }
         
         function toggleTabagismo(show) {
-            const field = document.getElementById('tabagismo_qtd');
-            if (show) { 
-                field.classList.remove('hidden'); 
-            } else { 
-                field.classList.add('hidden'); 
-                field.value = ''; 
-            }
+            document.getElementById('tabagismo_qtd').classList.toggle('hidden', !show);
         }
         
         function toggleAlcool(show) {
-            const field = document.getElementById('alcool_details');
-            if (show) { 
-                field.classList.remove('hidden'); 
-            } else { 
-                field.classList.add('hidden'); 
-                const inputs = field.querySelectorAll('input, select');
-                inputs.forEach(input => input.value = '');
-            }
+            document.getElementById('alcool_details').classList.toggle('hidden', !show);
         }
         
-        function toggleOutroAlcool(selectElement) {
-            const inputOutro = document.getElementById('alcool_outro');
-            if (selectElement.value === 'Outro') {
-                inputOutro.classList.remove('hidden');
-            } else {
-                inputOutro.classList.add('hidden');
-                inputOutro.value = '';
-            }
+        function toggleOutroAlcool(select) {
+            document.getElementById('alcool_outro').classList.toggle('hidden', select.value !== 'Outro');
         }
         
         function toggleMenstrual(show) {
-            const field = document.getElementById('menstrual_quais');
-            if (show) { 
-                field.classList.remove('hidden'); 
-            } else { 
-                field.classList.add('hidden'); 
-                field.value = ''; 
-            }
+            document.getElementById('menstrual_quais').classList.toggle('hidden', !show);
         }
         
         function toggleAcucar(show) {
-            const field = document.getElementById('acucar_qtd');
-            if (show) { 
-                field.classList.remove('hidden'); 
-            } else { 
-                field.classList.add('hidden'); 
-                field.value = ''; 
-            }
+            document.getElementById('acucar_qtd').classList.toggle('hidden', !show);
         }
         
         function toggleHistoricoFamilia(show) {
-            const field = document.getElementById('historico_familia_quais');
-            if (show) { 
-                field.classList.remove('hidden'); 
-            } else { 
-                field.classList.add('hidden'); 
-                field.value = ''; 
-            }
+            document.getElementById('historico_familia_quais').classList.toggle('hidden', !show);
         }
         
-        // ========== FUNÇÕES DE UTILIDADE ==========
-        function validarCampo(element) {
-            if (element.hasAttribute('required') && !element.value.trim()) {
-                element.classList.add('input-invalido');
-                element.classList.remove('input-validado');
-            } else {
-                element.classList.remove('input-invalido');
-                element.classList.add('input-validado');
-            }
-        }
-        
-        function atualizarAssuntoEmail() {
-            const nome = document.getElementById('nome_paciente').value;
-            const assuntoInput = document.getElementById('email_subject');
-            if (nome) {
-                assuntoInput.value = "ANAMNESE - " + nome.toUpperCase();
-            } else {
-                assuntoInput.value = "Nova Anamnese Recebida";
-            }
-        }
+        function validarCampo() {}
+        function atualizarAssuntoEmail() {}
         
         function atualizarResumo() {
-            const nome = document.getElementById('nome_paciente').value || 'Não informado';
-            const idade = document.getElementById('idadeOutput').value || '--';
-            const imc = document.getElementById('imcOutput').value || '--';
-            const objetivoSelect = document.getElementById('objetivo_select');
-            const objetivo = objetivoSelect ? objetivoSelect.value || 'Não informado' : 'Não informado';
+            document.getElementById('resumo-nome').textContent = document.getElementById('nome_paciente')?.value || '--';
+            document.getElementById('resumo-imc').textContent = document.getElementById('idadeOutput')?.value + ' / IMC: ' + (document.getElementById('imcOutput')?.value || '--');
+            document.getElementById('resumo-objetivo').textContent = document.getElementById('objetivo_select')?.value || '--';
             
             const condicoes = [];
-            const checkboxes = document.querySelectorAll('input[type="checkbox"][name^="prioridade_"]:checked');
-            checkboxes.forEach(cb => {
+            document.querySelectorAll('input[type="checkbox"][name^="prioridade_"]:checked').forEach(cb => {
                 const label = cb.closest('label');
-                if (label) {
-                    condicoes.push(label.textContent.trim());
-                }
+                if (label) condicoes.push(label.textContent.trim());
             });
-            
-            document.getElementById('resumo-nome').textContent = nome;
-            document.getElementById('resumo-imc').textContent = `${idade} / IMC: ${imc}`;
-            document.getElementById('resumo-objetivo').textContent = objetivo;
-            document.getElementById('resumo-condicoes').textContent = condicoes.length > 0 ? condicoes.join(', ') : 'Nenhuma condição prioritária';
+            document.getElementById('resumo-condicoes').textContent = condicoes.length ? condicoes.join(', ') : 'Nenhuma';
         }
         
-        // ========== FUNÇÃO DE IMPRESSÃO CORRIGIDA ==========
+        // FUNÇÃO DE IMPRESSÃO OTIMIZADA
         function imprimirFormulario() {
             const consentimento = document.querySelector('input[name="consentimento"]');
-            if (!consentimento.checked) {
-                alert('Por favor, aceite os termos e consentimento antes de imprimir.');
-                consentimento.focus();
+            if (!consentimento?.checked) {
+                alert('Por favor, aceite os termos.');
                 return;
             }
             
-            // Salvar estado atual
+            // Guardar seções visíveis
             const secoesVisiveis = [];
             for (let i = 1; i <= totalSections; i++) {
                 const section = document.getElementById(`section-${i}`);
@@ -1469,42 +1218,30 @@
                 }
             }
             
-            // Mostrar TODAS as seções para impressão (resolvendo o problema do PDF em branco)
+            // Mostrar TODAS as seções
             for (let i = 1; i <= totalSections; i++) {
                 const section = document.getElementById(`section-${i}`);
                 section.classList.remove('section-hidden');
                 section.classList.add('section-active');
-                // Garantir que o conteúdo seja visível
-                section.style.display = 'block';
             }
             
-            // Aguardar um momento para o DOM atualizar
+            // IMPRIMIR
+            window.print();
+            
+            // Restaurar
             setTimeout(() => {
-                window.print();
-                
-                // Restaurar estado original após impressão
                 for (let i = 1; i <= totalSections; i++) {
                     const section = document.getElementById(`section-${i}`);
                     if (!secoesVisiveis.includes(i)) {
                         section.classList.add('section-hidden');
                         section.classList.remove('section-active');
-                        section.style.display = '';
-                    } else {
-                        section.style.display = '';
                     }
                 }
-            }, 200);
-            
-            // Mensagem de instrução
-            setTimeout(() => {
-                alert('✅ Após imprimir/salvar o PDF, envie o arquivo para nutrilealves@gmail.com junto com seus exames.');
-            }, 500);
+            }, 100);
         }
         
         // Inicialização
-        document.addEventListener('DOMContentLoaded', function() {
-            updateProgress();
-        });
+        document.addEventListener('DOMContentLoaded', updateProgress);
     </script>
 </body>
 </html>
