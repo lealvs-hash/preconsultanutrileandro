@@ -121,7 +121,7 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-slate-600 mb-1">Nome Completo *</label>
-                        <input type="text" id="nome" name="nome" required class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg focus:ring-primary focus:border-primary block p-3 transition">
+                        <input type="text" id="nome" name="nome" onchange="atualizarTituloDoc()" required class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg focus:ring-primary focus:border-primary block p-3 transition">
                     </div>
                     
                     <div>
@@ -1027,11 +1027,23 @@
         // ==========================================
         // LÓGICA DE IMPRESSÃO OTIMIZADA PARA MULTIPAGE
         // ==========================================
+        function atualizarTituloDoc() {
+            const nomePaciente = document.getElementById('nome').value.trim();
+            if (nomePaciente) {
+                document.title = `Anamnese_${nomePaciente}`;
+            } else {
+                document.title = "Anamnese Nutricional";
+            }
+        }
+
         function salvarPDF() {
             if(!document.getElementById('termo').checked){
                 alert("Por favor, assinale o termo de consentimento antes de gerar o PDF.");
                 return;
             }
+
+            // Define o título ANTES de chamar a impressão (O celular vai usar isso como nome do arquivo)
+            atualizarTituloDoc();
 
             // Antes de imprimir, força as seções ativas a aparecerem (o CSS cuida das demais regras)
             document.querySelectorAll('.step-container').forEach(el => {
@@ -1043,16 +1055,21 @@
                 document.getElementById(`step-${stepId}`).style.setProperty("display", "block", "important");
             });
 
-            // Chama a janela de impressão nativa
-            window.print();
-
-            // Restaura o fluxo normal do app logo após a tela de impressão fechar
+            // Pequeno delay de 100ms apenas para o navegador renderizar as seções inteiras
             setTimeout(() => {
-                document.querySelectorAll('.step-container').forEach(el => {
-                    el.style.display = ''; 
-                });
-                document.getElementById(`step-${passosAtivos[indiceAtual]}`).classList.add('step-active');
-            }, 500);
+                // Chama a janela de impressão
+                window.print();
+
+                // Restaura o visual do formulário. 
+                // IMPORTANTE: NÃO vamos restaurar o document.title. Deixamos como "Anamnese_Nome" 
+                // pois no celular a janela de impressão é assíncrona. Se mudarmos o título de volta rápido, o PDF pega o nome errado.
+                setTimeout(() => {
+                    document.querySelectorAll('.step-container').forEach(el => {
+                        el.style.display = ''; 
+                    });
+                    document.getElementById(`step-${passosAtivos[indiceAtual]}`).classList.add('step-active');
+                }, 1000); // tempo de segurança para restaurar a tela
+            }, 100);
         }
 
         // Init Flow
