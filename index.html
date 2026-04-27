@@ -764,12 +764,12 @@
             <section id="step-8" class="step-container bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-200">
                 <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
                     <div class="w-10 h-10 shrink-0 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold"><i class="fa-solid fa-check-double"></i></div>
-                    <h2 class="text-xl font-bold text-slate-800">Finalização</h2>
+                    <h2 class="text-xl font-bold text-slate-800">Finalização e Envio</h2>
                 </div>
 
                 <div class="bg-emerald-50 border border-emerald-200 rounded-xl p-5 mb-6 text-emerald-800">
-                    <h3 class="font-bold mb-2">🎉 Tudo pronto!</h3>
-                    <p class="text-sm">As informações foram preenchidas. Para enviar suas respostas, clique no botão <strong>"Imprimir / Salvar PDF"</strong> abaixo e envie o arquivo gerado para o WhatsApp ou E-mail da clínica.</p>
+                    <h3 class="font-bold mb-2 text-lg">🎉 Tudo pronto!</h3>
+                    <p class="text-sm">As informações foram preenchidas. Salve o arquivo em PDF e nos envie <strong>junto com seus exames de sangue mais recentes (caso os tenha).</strong></p>
                 </div>
 
                 <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 mb-6">
@@ -779,10 +779,29 @@
                     </label>
                 </div>
                 
-                <div class="text-center no-print">
-                    <button type="button" onclick="salvarPDF()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition-all w-full sm:w-auto flex items-center justify-center gap-2 mx-auto">
-                        <i class="fa-solid fa-print"></i> Salvar PDF / Imprimir Formulário
+                <div class="text-center no-print space-y-6">
+                    <!-- Botão 1: Salvar PDF -->
+                    <button type="button" onclick="salvarPDF()" class="bg-primary hover:bg-primary/90 text-white font-bold py-4 px-8 rounded-xl shadow-lg transition-all w-full sm:w-auto flex items-center justify-center gap-2 mx-auto">
+                        <i class="fa-solid fa-download"></i> 1º Passo - Salvar Anamnese em PDF
                     </button>
+
+                    <!-- Botões de Envio e Exames -->
+                    <div class="pt-6 border-t border-slate-200">
+                        <p class="text-sm font-semibold text-slate-700 mb-4"><i class="fa-regular fa-paper-plane mr-1"></i> 2º Passo - Envie o PDF + seus exames recentes para:</p>
+                        
+                        <div class="flex flex-col sm:flex-row gap-3 justify-center max-w-lg mx-auto">
+                            <!-- Link WhatsApp -->
+                            <a href="https://wa.me/5551991333905?text=Olá!%20Estou%20enviando%20minha%20anamnese%20preenchida%20e%20meus%20exames." target="_blank" class="flex-1 bg-[#25D366] hover:bg-[#1fae54] text-white py-3 px-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors shadow-sm">
+                                <i class="fa-brands fa-whatsapp text-xl"></i> WhatsApp
+                            </a>
+                            
+                            <!-- Link E-mail -->
+                            <a href="mailto:nutrilealves@gmail.com?subject=Anamnese e Exames - Nova Consulta" target="_blank" class="flex-1 bg-slate-700 hover:bg-slate-800 text-white py-3 px-4 rounded-xl font-bold flex items-center justify-center gap-2 transition-colors shadow-sm">
+                                <i class="fa-regular fa-envelope text-xl"></i> E-mail
+                            </a>
+                        </div>
+                        <p class="text-[11px] text-slate-500 mt-3 font-mono">(51) 99133-3905 &bull; nutrilealves@gmail.com</p>
+                    </div>
                 </div>
             </section>
 
