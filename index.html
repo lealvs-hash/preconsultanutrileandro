@@ -45,6 +45,14 @@
         }
         .radio-card div { transition: all 0.2s ease; }
 
+        /* Faz as textareas crescerem sem scroll e sem quebrar layout */
+        textarea { 
+            resize: none; 
+            overflow: hidden; 
+            min-height: 56px; 
+            transition: border-color 0.2s;
+        }
+
         /* --- MODO DE IMPRESSÃO (PDF) - CORRIGIDO PARA MULTIPAGE --- */
         @media print {
             body, html, main, form, .min-h-screen { 
@@ -123,12 +131,27 @@
                     </div>
                     
                     <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1">CPF</label>
+                        <input type="text" inputmode="numeric" placeholder="000.000.000-00" maxlength="14" id="cpf" name="cpf" oninput="formatarCPF(this)" class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg focus:ring-primary focus:border-primary block p-3 transition">
+                    </div>
+
+                    <div>
                         <label class="block text-sm font-medium text-slate-600 mb-1">Data de Nascimento *</label>
                         <input type="text" inputmode="numeric" placeholder="DD/MM/AAAA" maxlength="10" id="nascimento" name="nascimento" oninput="formatarData(this); calcularIdade()" required class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg focus:ring-primary focus:border-primary block p-3 transition">
                     </div>
+
                     <div>
                         <label class="block text-sm font-medium text-slate-600 mb-1">Idade Calculada</label>
                         <input type="text" id="idade" name="idade" readonly class="w-full bg-slate-200 border border-slate-300 text-slate-600 font-semibold rounded-lg block p-3 cursor-not-allowed" placeholder="--">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1 mt-2">Sexo Biológico *</label>
+                        <select id="sexo" name="sexo" required onchange="calcularRCQ()" class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg focus:ring-primary focus:border-primary block p-3 transition">
+                            <option value="">Selecione...</option>
+                            <option value="Feminino">Feminino</option>
+                            <option value="Masculino">Masculino</option>
+                        </select>
                     </div>
 
                     <div class="md:col-span-2 flex items-start gap-3 mt-1 bg-orange-50/70 p-4 rounded-xl border border-orange-100 transition-colors" id="box_geriatria">
@@ -140,19 +163,11 @@
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-slate-600 mb-1 mt-2">Sexo Biológico *</label>
-                        <select id="sexo" name="sexo" required onchange="calcularRCQ()" class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg focus:ring-primary focus:border-primary block p-3 transition">
-                            <option value="">Selecione...</option>
-                            <option value="Feminino">Feminino</option>
-                            <option value="Masculino">Masculino</option>
-                        </select>
-                    </div>
-                    <div>
                         <label class="block text-sm font-medium text-slate-600 mb-1 mt-2">Telefone / WhatsApp *</label>
                         <input type="tel" name="telefone" inputmode="numeric" placeholder="(00) 00000-0000" required class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg focus:ring-primary focus:border-primary block p-3 transition">
                     </div>
-                    <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-slate-600 mb-1">E-mail</label>
+                    <div>
+                        <label class="block text-sm font-medium text-slate-600 mb-1 mt-2">E-mail</label>
                         <input type="email" name="email" placeholder="seu@email.com" class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg focus:ring-primary focus:border-primary block p-3 transition">
                     </div>
 
@@ -162,12 +177,10 @@
 
                     <div>
                         <label class="block text-sm font-medium text-slate-600 mb-1">Peso Atual (kg) *</label>
-                        <!-- CORREÇÃO: Máscara Automática de Peso -->
                         <input type="text" inputmode="numeric" maxlength="6" id="peso" name="peso" placeholder="Ex: 70,5" oninput="formatarPeso(this); calcularIMC()" required class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg focus:ring-primary focus:border-primary block p-3 transition">
                     </div>
                     <div>
                         <label class="block text-sm font-medium text-slate-600 mb-1">Altura (m) *</label>
-                        <!-- CORREÇÃO: Máscara Automática de Altura -->
                         <input type="text" inputmode="numeric" maxlength="4" id="altura" name="altura" placeholder="Ex: 1,75" oninput="formatarAltura(this); calcularIMC()" required class="w-full bg-slate-50 border border-slate-300 text-slate-900 rounded-lg focus:ring-primary focus:border-primary block p-3 transition">
                     </div>
 
@@ -272,7 +285,8 @@
 
                     <div class="pt-4">
                         <label class="block text-sm font-medium text-slate-600 mb-2">Detalhe suas expectativas em poucas palavras:</label>
-                        <textarea name="expectativas" rows="3" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 focus:ring-primary focus:border-primary" placeholder="Ex: Quero perder 5kg para o verão, ou melhorar minha energia para brincar com meus netos..."></textarea>
+                        <!-- AUTO-RESIZE TEXTAREA -->
+                        <textarea name="expectativas" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 focus:ring-primary focus:border-primary" placeholder="Ex: Quero perder 5kg para o verão, ou melhorar minha energia para brincar com meus netos..."></textarea>
                     </div>
                 </div>
             </section>
@@ -361,7 +375,7 @@
                             <label class="flex items-center gap-2 bg-slate-50 p-2 rounded border border-slate-200 cursor-pointer hover:bg-slate-100"><input type="checkbox" name="patologias" value="Esteatose Hepática" class="rounded text-red-500 w-4 h-4 shrink-0"> <span class="text-sm">Gordura no Fígado</span></label>
                             <label class="flex items-center gap-2 bg-slate-50 p-2 rounded border border-slate-200 cursor-pointer hover:bg-slate-100"><input type="checkbox" name="patologias" value="Anemia" class="rounded text-red-500 w-4 h-4 shrink-0"> <span class="text-sm">Anemia</span></label>
                             
-                            <!-- CORREÇÃO: Campo de "Outras" Patologias -->
+                            <!-- Campo de "Outras" Patologias -->
                             <label class="flex items-center gap-2 bg-slate-50 p-2 rounded border border-slate-200 cursor-pointer hover:bg-slate-100">
                                 <input type="checkbox" name="patologias" value="Outras" onchange="document.getElementById('patologias_outras_container').classList.toggle('hidden', !this.checked)" class="rounded text-red-500 w-4 h-4 shrink-0"> 
                                 <span class="text-sm">Outras</span>
@@ -377,11 +391,13 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-5 border-t border-slate-100 pt-5">
                         <div>
                             <label class="block text-sm font-medium text-slate-600 mb-1">Uso de Medicamentos (Quais?)</label>
-                            <textarea name="medicamentos" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3" placeholder="Ex: Losartana 50mg, Omeprazol..."></textarea>
+                            <!-- AUTO-RESIZE TEXTAREA -->
+                            <textarea name="medicamentos" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3" placeholder="Ex: Losartana 50mg, Omeprazol..."></textarea>
                         </div>
                         <div>
                             <label class="block text-sm font-medium text-slate-600 mb-1">Cirurgias Recentes (Incluindo Bariátrica)</label>
-                            <textarea name="cirurgias" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3" placeholder="Ano e tipo de cirurgia..."></textarea>
+                            <!-- AUTO-RESIZE TEXTAREA -->
+                            <textarea name="cirurgias" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3" placeholder="Ano e tipo de cirurgia..."></textarea>
                         </div>
                     </div>
 
@@ -397,7 +413,6 @@
                                     <option value="Preso">Preso (Demora 2+ dias)</option>
                                 </select>
                                 
-                                <!-- CORREÇÃO: Escala de Bristol diretamente como opções selecionáveis -->
                                 <label class="block text-xs font-semibold text-slate-500 mb-2 mt-4">Escala de Bristol (Formato das fezes)</label>
                                 <div class="space-y-1.5">
                                     <label class="radio-card cursor-pointer block">
@@ -450,7 +465,6 @@
                                     <label class="flex items-center gap-2"><input type="checkbox" name="sintoma_tgi" value="Azia" class="rounded text-primary shrink-0"> <span class="text-sm">Azia / Queimação / Refluxo</span></label>
                                     <label class="flex items-center gap-2"><input type="checkbox" name="sintoma_tgi" value="Gases" class="rounded text-primary shrink-0"> <span class="text-sm">Excesso Gases / Estufamento</span></label>
                                     <label class="flex items-center gap-2"><input type="checkbox" name="sintoma_tgi" value="Dores" class="rounded text-primary shrink-0"> <span class="text-sm">Dores Abdominais</span></label>
-                                    <!-- CORREÇÃO: Constipação acionando Bristol -->
                                     <label class="flex items-center gap-2"><input type="checkbox" name="sintoma_tgi" value="Constipação" onchange="handleConstipacao(this)" class="rounded text-primary shrink-0"> <span class="text-sm">Constipação (Intestino Preso)</span></label>
                                 </div>
                             </div>
@@ -552,7 +566,8 @@
 
                         <div class="pt-4 border-t border-slate-100">
                             <label class="block text-sm font-medium text-slate-600 mb-1">Uso de Suplementos Esportivos (Quais e que horas?)</label>
-                            <textarea name="suplementos" rows="2" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3" placeholder="Ex: Whey pós-treino, Creatina no café da manhã..."></textarea>
+                            <!-- AUTO-RESIZE TEXTAREA -->
+                            <textarea name="suplementos" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3" placeholder="Ex: Whey pós-treino, Creatina no café da manhã..."></textarea>
                         </div>
                     </div>
                 </div>
@@ -607,7 +622,6 @@
                         </select>
                     </div>
 
-                    <!-- CORREÇÃO: Uso de Açúcar e Quantidade Dinâmica -->
                     <div>
                         <label class="block text-sm font-medium text-slate-600 mb-2">Uso de Açúcar ou Adoçante</label>
                         <select name="acucar_adocante" onchange="toggleAcucarQtd(this)" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-sm">
@@ -634,7 +648,6 @@
                         </select>
                     </div>
 
-                    <!-- CORREÇÃO: Uso de Sal e Óleo (Novos Campos) -->
                     <div class="md:col-span-2 border-t border-slate-100 pt-5 mt-2">
                         <h3 class="font-semibold text-slate-700 mb-4 text-sm uppercase tracking-wider"><i class="fa-solid fa-fire-burner text-amber-500 mr-1"></i> Preparo das Refeições em Casa</h3>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
@@ -653,11 +666,13 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
                             <div>
                                 <label class="block text-sm font-medium text-red-500 mb-1"><i class="fa-solid fa-thumbs-down"></i> Aversões (O que NÃO come)</label>
-                                <textarea name="aversoes" rows="2" class="w-full bg-red-50/50 border border-red-200 rounded-lg p-3" placeholder="Ex: Fígado, Pimentão, Intolerância a Leite..."></textarea>
+                                <!-- AUTO-RESIZE TEXTAREA -->
+                                <textarea name="aversoes" class="w-full bg-red-50/50 border border-red-200 rounded-lg p-3 focus:ring-red-500 focus:border-red-500" placeholder="Ex: Fígado, Pimentão, Intolerância a Leite..."></textarea>
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-emerald-600 mb-1"><i class="fa-solid fa-heart"></i> Preferências (O que AMA)</label>
-                                <textarea name="preferencias" rows="2" class="w-full bg-emerald-50/50 border border-emerald-200 rounded-lg p-3" placeholder="Ex: Café, Chocolate, Churrasco..."></textarea>
+                                <!-- AUTO-RESIZE TEXTAREA -->
+                                <textarea name="preferencias" class="w-full bg-emerald-50/50 border border-emerald-200 rounded-lg p-3 focus:ring-emerald-500 focus:border-emerald-500" placeholder="Ex: Café, Chocolate, Churrasco..."></textarea>
                             </div>
                         </div>
                     </div>
@@ -705,7 +720,8 @@
                             </div>
                         </div>
                         <div class="p-4">
-                            <textarea name="desc_ref_1" rows="2" class="w-full bg-white border border-slate-300 rounded-lg p-3 text-sm focus:ring-primary focus:border-primary" placeholder="Detalhe os alimentos e as quantidades. Ex: 2 fatias de pão integral, 2 ovos mexidos, 1 xícara de café sem açúcar."></textarea>
+                            <!-- AUTO-RESIZE TEXTAREA -->
+                            <textarea name="desc_ref_1" class="w-full bg-white border border-slate-300 rounded-lg p-3 text-sm focus:ring-primary focus:border-primary" placeholder="Detalhe os alimentos e as quantidades. Ex: 2 fatias de pão integral, 2 ovos mexidos, 1 xícara de café sem açúcar."></textarea>
                         </div>
                     </div>
 
@@ -718,7 +734,8 @@
                             </div>
                         </div>
                         <div class="p-4">
-                            <textarea name="desc_ref_2" rows="2" class="w-full bg-white border border-slate-300 rounded-lg p-3 text-sm focus:ring-primary focus:border-primary" placeholder="Ex: 4 colheres de arroz, 1 concha de feijão, 1 filé de frango grande, salada à vontade."></textarea>
+                            <!-- AUTO-RESIZE TEXTAREA -->
+                            <textarea name="desc_ref_2" class="w-full bg-white border border-slate-300 rounded-lg p-3 text-sm focus:ring-primary focus:border-primary" placeholder="Ex: 4 colheres de arroz, 1 concha de feijão, 1 filé de frango grande, salada à vontade."></textarea>
                         </div>
                     </div>
 
@@ -731,7 +748,8 @@
                             </div>
                         </div>
                         <div class="p-4">
-                            <textarea name="desc_ref_3" rows="2" class="w-full bg-white border border-slate-300 rounded-lg p-3 text-sm focus:ring-primary focus:border-primary" placeholder="Ex: 1 pote de iogurte natural com 1 banana e aveia."></textarea>
+                            <!-- AUTO-RESIZE TEXTAREA -->
+                            <textarea name="desc_ref_3" class="w-full bg-white border border-slate-300 rounded-lg p-3 text-sm focus:ring-primary focus:border-primary" placeholder="Ex: 1 pote de iogurte natural com 1 banana e aveia."></textarea>
                         </div>
                     </div>
 
@@ -744,7 +762,8 @@
                             </div>
                         </div>
                         <div class="p-4">
-                            <textarea name="desc_ref_4" rows="2" class="w-full bg-white border border-slate-300 rounded-lg p-3 text-sm focus:ring-primary focus:border-primary" placeholder="Ex: Sopa de legumes com carne, ou repito o almoço, ou tomo apenas um chá antes de dormir."></textarea>
+                            <!-- AUTO-RESIZE TEXTAREA -->
+                            <textarea name="desc_ref_4" class="w-full bg-white border border-slate-300 rounded-lg p-3 text-sm focus:ring-primary focus:border-primary" placeholder="Ex: Sopa de legumes com carne, ou repito o almoço, ou tomo apenas um chá antes de dormir."></textarea>
                         </div>
                     </div>
                 </div>
@@ -756,7 +775,8 @@
                 <div class="mt-8 pt-6 border-t border-slate-200">
                     <label class="block text-sm font-semibold text-slate-700 mb-2"><i class="fa-regular fa-calendar-days mr-1"></i> Outros dados da sua rotina alimentar</label>
                     <p class="text-xs text-slate-500 mb-3 break-words">Como você se alimenta aos finais de semana? Costuma fazer lanches noturnos ou beliscar entre as refeições?</p>
-                    <textarea name="outros_dados_alimentares" rows="4" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-sm focus:ring-primary focus:border-primary" placeholder="Descreva aqui as variações da sua rotina, o que costuma mudar de sábado e domingo, pedidos de ifood, etc..."></textarea>
+                    <!-- AUTO-RESIZE TEXTAREA -->
+                    <textarea name="outros_dados_alimentares" class="w-full bg-slate-50 border border-slate-300 rounded-lg p-3 text-sm focus:ring-primary focus:border-primary" placeholder="Descreva aqui as variações da sua rotina, o que costuma mudar de sábado e domingo, pedidos de ifood, etc..."></textarea>
                 </div>
             </section>
 
@@ -822,8 +842,40 @@
 
     <script>
         // ==========================================
-        // MÁSCARAS DE ENTRADA (DATA, HORA E ALTURA)
+        // TEXTAREA AUTO-RESIZE (PREVENIR CORTE NO PDF)
         // ==========================================
+        function autoResize(textarea) {
+            textarea.style.height = 'auto'; // Reseta a altura para recalcular
+            textarea.style.height = textarea.scrollHeight + 'px'; // Define a nova altura exata
+        }
+
+        // Aplica o evento em todas as textareas assim que a página carregar
+        document.addEventListener("DOMContentLoaded", function() {
+            const textareas = document.querySelectorAll('textarea');
+            textareas.forEach(textarea => {
+                textarea.addEventListener('input', function() {
+                    autoResize(this);
+                });
+                // Faz o ajuste inicial (caso a página já carregue com texto salvo pelo navegador)
+                autoResize(textarea);
+            });
+        });
+
+        // ==========================================
+        // MÁSCARAS DE ENTRADA (CPF, DATA, HORA E ALTURA)
+        // ==========================================
+        function formatarCPF(input) {
+            let v = input.value.replace(/\D/g, ''); // Permite apenas números
+            if (v.length > 11) v = v.slice(0, 11);
+            
+            // Coloca os pontos e o traço
+            v = v.replace(/(\d{3})(\d)/, '$1.$2');
+            v = v.replace(/(\d{3})(\d)/, '$1.$2');
+            v = v.replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+            
+            input.value = v;
+        }
+
         function formatarData(input) {
             let v = input.value.replace(/\D/g, ''); 
             if (v.length > 8) v = v.slice(0, 8);
@@ -846,9 +898,8 @@
 
         function formatarPeso(input) {
             let v = input.value.replace(/\D/g, ''); // Permite apenas números
-            if (v.length > 4) v = v.slice(0, 4);    // Limita a 4 dígitos numéricos (ex: 1505 -> 150,5)
+            if (v.length > 4) v = v.slice(0, 4);    // Limita a 4 dígitos numéricos
             
-            // Adiciona a vírgula antes do último dígito
             if (v.length > 1) {
                 v = v.slice(0, -1) + ',' + v.slice(-1);
             }
@@ -857,9 +908,8 @@
 
         function formatarAltura(input) {
             let v = input.value.replace(/\D/g, ''); // Permite apenas números
-            if (v.length > 3) v = v.slice(0, 3);    // Limita a 3 dígitos numéricos (ex: 185)
+            if (v.length > 3) v = v.slice(0, 3);    // Limita a 3 dígitos numéricos
             
-            // Adiciona a vírgula após o primeiro dígito
             if (v.length > 1) {
                 v = v.slice(0, 1) + ',' + v.slice(1);
             }
@@ -871,7 +921,6 @@
         // ==========================================
         function handleConstipacao(checkbox) {
             if(checkbox.checked) {
-                // Ao marcar constipação, seleciona o Tipo 1
                 const radio = document.getElementById('bristol_tipo_1');
                 if(radio) radio.checked = true;
             }
@@ -926,6 +975,9 @@
             const proximoPassoId = passosAtivos[indiceAtual];
             document.getElementById(`step-${proximoPassoId}`).classList.add('step-active');
             
+            // Quando troca de aba, recalcula as caixas de texto (se estavam invisíveis antes, o scrollHeight era 0)
+            document.querySelectorAll(`#step-${proximoPassoId} textarea`).forEach(ta => autoResize(ta));
+            
             updateUI();
             window.scrollTo(0,0);
         }
@@ -973,11 +1025,19 @@
                         </div>
                     </div>
                     <div class="p-4">
-                        <textarea name="desc_ref_${mealCount}" rows="2" class="w-full bg-white border border-slate-300 rounded-lg p-3 text-sm focus:ring-primary focus:border-primary" placeholder="Detalhe os alimentos e quantidades desta refeição..."></textarea>
+                        <textarea name="desc_ref_${mealCount}" class="w-full bg-white border border-slate-300 rounded-lg p-3 text-sm focus:ring-primary focus:border-primary" placeholder="Detalhe os alimentos e quantidades desta refeição..."></textarea>
                     </div>
                 </div>
             `;
             container.insertAdjacentHTML('beforeend', novaRefeicaoHTML);
+            
+            // Adiciona o evento de auto-resize no textarea que acabou de ser criado
+            const novaTextarea = document.querySelector(`textarea[name="desc_ref_${mealCount}"]`);
+            if (novaTextarea) {
+                novaTextarea.addEventListener('input', function() {
+                    autoResize(this);
+                });
+            }
             
             setTimeout(() => {
                 document.getElementById(`ref_container_${mealCount}`).classList.remove('opacity-0', 'translate-y-2');
@@ -1068,13 +1128,10 @@
         }
 
         function calcularIMC() {
-            // Substitui vírgula por ponto para o cálculo funcionar corretamente
             const pesoInput = document.getElementById('peso').value.replace(',', '.');
             const peso = parseFloat(pesoInput);
-            
             const alturaInput = document.getElementById('altura').value.replace(',', '.');
             const altura = parseFloat(alturaInput);
-            
             const inputClass = document.getElementById('imc_class');
             
             if (peso > 0 && altura > 0) {
@@ -1154,12 +1211,18 @@
                 el.classList.remove('step-active');
             });
 
+            // Mostra todos os passos para impressão
             passosAtivos.forEach(stepId => {
                 document.getElementById(`step-${stepId}`).style.setProperty("display", "block", "important");
             });
 
+            // ⚠️ ATENÇÃO: Recalcula a altura de TODAS as caixas de texto imediatamente antes de abrir a janela de impressão
+            document.querySelectorAll('textarea').forEach(ta => autoResize(ta));
+
             setTimeout(() => {
                 window.print();
+                
+                // Restaura o layout padrão para a tela após imprimir
                 setTimeout(() => {
                     document.querySelectorAll('.step-container').forEach(el => {
                         el.style.display = ''; 
